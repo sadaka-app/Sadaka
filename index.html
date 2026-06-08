@@ -6,107 +6,469 @@
 <title>صدقة جارية عن شيماء سعيد</title>
 <link rel="manifest" href="manifest.json">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #0f0f1a;
+  --bg2: #1a1a2e;
+  --card: rgba(255,255,255,0.07);
+  --gold: #ffd700;
+  --text: #ffffff;
+  --text2: #aaaaaa;
+  --border: rgba(255,255,255,0.1);
+}
+.light {
+  --bg: #f0f0f5;
+  --bg2: #e0e0ef;
+  --card: rgba(0,0,0,0.05);
+  --gold: #b8860b;
+  --text: #111111;
+  --text2: #555555;
+  --border: rgba(0,0,0,0.1);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  background: var(--bg);
+  color: var(--text);
   min-height: 100vh;
+  transition: all 0.3s;
+}
+.header {
+  background: var(--bg2);
+  padding: 15px 20px;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  color: white;
-  padding: 20px;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
-.card {
-  background: rgba(255,255,255,0.1);
+.header h1 { font-size: 16px; color: var(--gold); }
+.theme-btn {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 12px;
   border-radius: 20px;
-  padding: 40px 30px;
-  text-align: center;
-  max-width: 400px;
-  width: 100%;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.2);
+  cursor: pointer;
+  font-size: 18px;
 }
-.moon { font-size: 60px; margin-bottom: 20px; }
-h1 { font-size: 22px; margin-bottom: 10px; color: #ffd700; }
-.name { font-size: 28px; font-weight: bold; margin: 15px 0; color: #fff; }
-.ayah {
-  font-size: 16px;
-  line-height: 1.8;
-  color: #ccc;
-  margin: 20px 0;
+.tabs {
+  display: flex;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+}
+.tab {
+  flex: 1;
+  padding: 12px 5px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--text2);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  min-width: 70px;
+}
+.tab.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+.page { display: none; padding: 20px 15px; }
+.page.active { display: block; }
+
+/* الصفحة الرئيسية */
+.hero {
+  text-align: center;
+  padding: 30px 20px;
+  background: var(--card);
+  border-radius: 20px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+}
+.hero .moon { font-size: 60px; margin-bottom: 15px; }
+.hero h2 { font-size: 20px; color: var(--gold); margin-bottom: 8px; }
+.hero .name { font-size: 28px; font-weight: bold; margin: 10px 0; }
+.hero .ayah {
+  font-size: 15px;
+  line-height: 2;
+  color: var(--text2);
+  margin-top: 15px;
   padding: 15px;
-  background: rgba(255,255,255,0.05);
+  background: var(--card);
   border-radius: 10px;
 }
-.counter-section { margin: 25px 0; }
-.counter-label { font-size: 14px; color: #aaa; margin-bottom: 10px; }
-.counter { font-size: 48px; font-weight: bold; color: #ffd700; }
-.btn {
-  background: linear-gradient(135deg, #ffd700, #ffaa00);
-  color: #1a1a2e;
-  border: none;
-  border-radius: 50px;
-  padding: 15px 40px;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  width: 100%;
-  margin: 10px 0;
+
+/* السبحة */
+.tasbeh-card {
+  background: var(--card);
+  border-radius: 20px;
+  padding: 30px 20px;
+  text-align: center;
+  border: 1px solid var(--border);
+  margin-bottom: 15px;
 }
-.btn:active { transform: scale(0.97); }
+.tasbeh-select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  background: var(--bg2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  font-size: 14px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.count-display { font-size: 72px; font-weight: bold; color: var(--gold); line-height: 1; }
+.count-label { font-size: 13px; color: var(--text2); margin: 5px 0 20px; }
+.tasbeh-btn {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), #ff8c00);
+  border: none;
+  font-size: 32px;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(255,215,0,0.3);
+  transition: transform 0.1s;
+  margin: 10px auto;
+  display: block;
+}
+.tasbeh-btn:active { transform: scale(0.93); }
 .reset-btn {
   background: transparent;
-  color: #aaa;
-  border: 1px solid #aaa;
-  border-radius: 50px;
-  padding: 10px 30px;
-  font-size: 14px;
+  border: 1px solid var(--border);
+  color: var(--text2);
+  padding: 8px 25px;
+  border-radius: 20px;
   cursor: pointer;
-  margin-top: 5px;
+  font-size: 13px;
+  margin-top: 10px;
 }
-.total { font-size: 13px; color: #888; margin-top: 15px; }
+.total-count { font-size: 12px; color: var(--text2); margin-top: 10px; }
+
+/* الأذكار */
+.azkar-cats {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 15px;
+  overflow-x: auto;
+  padding-bottom: 5px;
+}
+.cat-btn {
+  padding: 7px 15px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text2);
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.cat-btn.active {
+  background: var(--gold);
+  color: #111;
+  border-color: var(--gold);
+}
+.zekr-card {
+  background: var(--card);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+}
+.zekr-text {
+  font-size: 17px;
+  line-height: 2;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.zekr-info {
+  font-size: 12px;
+  color: var(--text2);
+  text-align: center;
+}
+.zekr-counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 12px;
+}
+.zekr-count-btn {
+  background: var(--gold);
+  color: #111;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+}
+.zekr-count { font-size: 16px; font-weight: bold; color: var(--gold); min-width: 40px; text-align: center; }
+
+/* القرآن */
+.quran-nav {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+.quran-select {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  background: var(--bg2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  font-size: 13px;
+}
+.ayah-card {
+  background: var(--card);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+}
+.ayah-number {
+  width: 32px;
+  height: 32px;
+  background: var(--gold);
+  color: #111;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+.ayah-arabic { font-size: 18px; line-height: 2.2; margin-bottom: 12px; text-align: center; }
+.ayah-tafseer {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--text2);
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
 </style>
 </head>
 <body>
-<div class="card">
-  <div class="moon">🌙</div>
-  <h1>صدقة جارية</h1>
-  <div class="name">شيماء سعيد</div>
-  <div class="ayah">
-    ﴿ إِنَّا نَحْنُ نُحْيِي الْمَوْتَىٰ وَنَكْتُبُ مَا قَدَّمُوا وَآثَارَهُمْ ﴾
-  </div>
-  <div class="counter-section">
-    <div class="counter-label">عدد التسبيحات</div>
-    <div class="counter" id="count">0</div>
-  </div>
-  <button class="btn" onclick="increment()">سبحان الله 🤍</button>
-  <button class="reset-btn" onclick="reset()">إعادة تعيين</button>
-  <div class="total" id="total"></div>
+<div class="header">
+  <h1>🌙 صدقة جارية عن شيماء سعيد</h1>
+  <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">☀️</button>
 </div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showPage('home',this)">🏠 الرئيسية</div>
+  <div class="tab" onclick="showPage('tasbeh',this)">📿 السبحة</div>
+  <div class="tab" onclick="showPage('azkar',this)">🤲 الأذكار</div>
+  <div class="tab" onclick="showPage('quran',this)">📖 القرآن</div>
+</div>
+
+<!-- الرئيسية -->
+<div class="page active" id="home">
+  <div class="hero">
+    <div class="moon">🌙</div>
+    <h2>صدقة جارية</h2>
+    <div class="name">شيماء سعيد</div>
+    <div class="ayah">﴿ إِنَّا نَحْنُ نُحْيِي الْمَوْتَىٰ وَنَكْتُبُ مَا قَدَّمُوا وَآثَارَهُمْ ﴾</div>
+  </div>
+</div>
+
+<!-- السبحة -->
+<div class="page" id="tasbeh">
+  <div class="tasbeh-card">
+    <select class="tasbeh-select" id="tasbehType" onchange="resetTasbeh()">
+      <option value="سبحان الله">سبحان الله</option>
+      <option value="الحمد لله">الحمد لله</option>
+      <option value="الله أكبر">الله أكبر</option>
+      <option value="لا إله إلا الله">لا إله إلا الله</option>
+      <option value="أستغفر الله">أستغفر الله</option>
+      <option value="اللهم صل على النبي">اللهم صل على النبي</option>
+    </select>
+    <div class="count-display" id="tasbehCount">0</div>
+    <div class="count-label" id="tasbehLabel">سبحان الله</div>
+    <button class="tasbeh-btn" onclick="incrementTasbeh()">📿</button>
+    <button class="reset-btn" onclick="resetTasbeh()">إعادة تعيين</button>
+    <div class="total-count" id="tasbehTotal"></div>
+  </div>
+</div>
+
+<!-- الأذكار -->
+<div class="page" id="azkar">
+  <div class="azkar-cats">
+    <button class="cat-btn active" onclick="showAzkar('sabah',this)">صباح</button>
+    <button class="cat-btn" onclick="showAzkar('masa',this)">مساء</button>
+    <button class="cat-btn" onclick="showAzkar('nawm',this)">نوم</button>
+    <button class="cat-btn" onclick="showAzkar('salah',this)">بعد الصلاة</button>
+  </div>
+  <div id="azkarList"></div>
+</div>
+
+<!-- القرآن -->
+<div class="page" id="quran">
+  <div class="quran-nav">
+    <select class="quran-select" id="surahSelect" onchange="loadSurah()">
+      <option value="1">الفاتحة</option>
+      <option value="2">البقرة</option>
+      <option value="112">الإخلاص</option>
+      <option value="113">الفلق</option>
+      <option value="114">الناس</option>
+      <option value="36">يس</option>
+      <option value="67">الملك</option>
+      <option value="55">الرحمن</option>
+      <option value="18">الكهف</option>
+      <option value="56">الواقعة</option>
+    </select>
+  </div>
+  <div id="quranContent"></div>
+</div>
+
 <script>
-let count = parseInt(localStorage.getItem('sadaqa_count') || '0');
-let total = parseInt(localStorage.getItem('sadaqa_total') || '0');
-document.getElementById('count').textContent = count;
-updateTotal();
-function increment() {
-  count++;
-  total++;
-  localStorage.setItem('sadaqa_count', count);
-  localStorage.setItem('sadaqa_total', total);
-  document.getElementById('count').textContent = count;
-  updateTotal();
+// ===== الثيم =====
+let isDark = true;
+function toggleTheme() {
+  isDark = !isDark;
+  document.body.classList.toggle('light', !isDark);
+  document.getElementById('themeBtn').textContent = isDark ? '☀️' : '🌙';
 }
-function reset() {
-  count = 0;
-  localStorage.setItem('sadaqa_count', 0);
-  document.getElementById('count').textContent = count;
+
+// ===== التنقل =====
+function showPage(id, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
 }
-function updateTotal() {
-  if(total > 0) {
-    document.getElementById('total').textContent = 'إجمالي التسبيحات: ' + total;
+
+// ===== السبحة =====
+let tasbehCount = 0, tasbehTotal = 0;
+function incrementTasbeh() {
+  tasbehCount++;
+  tasbehTotal++;
+  document.getElementById('tasbehCount').textContent = tasbehCount;
+  document.getElementById('tasbehLabel').textContent = document.getElementById('tasbehType').value;
+  document.getElementById('tasbehTotal').textContent = 'الإجمالي: ' + tasbehTotal;
+  if(tasbehCount % 33 === 0) {
+    document.getElementById('tasbehCount').style.color = '#ff6b6b';
+    setTimeout(() => document.getElementById('tasbehCount').style.color = 'var(--gold)', 500);
   }
+}
+function resetTasbeh() {
+  tasbehCount = 0;
+  document.getElementById('tasbehCount').textContent = 0;
+  document.getElementById('tasbehLabel').textContent = document.getElementById('tasbehType').value;
+}
+
+// ===== الأذكار =====
+const azkarData = {
+  sabah: [
+    { text: 'أَعُوذُ بِاللهِ مِنَ الشَّيْطَانِ الرَّجِيمِ، اللهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ...', info: 'آية الكرسي', count: 1 },
+    { text: 'اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ', info: 'سيد الاستغفار', count: 1 },
+    { text: 'سُبْحَانَ اللهِ وَبِحَمْدِهِ', info: 'يُقال 100 مرة', count: 100 },
+    { text: 'لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ', info: 'يُقال 10 مرات', count: 10 },
+    { text: 'اللَّهُمَّ بِكَ أَصْبَحْنَا وَبِكَ أَمْسَيْنَا وَبِكَ نَحْيَا وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ', info: 'ذكر الصباح', count: 1 },
+  ],
+  masa: [
+    { text: 'اللَّهُمَّ بِكَ أَمْسَيْنَا وَبِكَ أَصْبَحْنَا وَبِكَ نَحْيَا وَبِكَ نَمُوتُ وَإِلَيْكَ الْمَصِيرُ', info: 'ذكر المساء', count: 1 },
+    { text: 'أَمْسَيْنَا وَأَمْسَى الْمُلْكُ للهِ، وَالْحَمْدُ للهِ', info: 'ذكر المساء', count: 1 },
+    { text: 'سُبْحَانَ اللهِ وَبِحَمْدِهِ', info: 'يُقال 100 مرة', count: 100 },
+    { text: 'اللَّهُمَّ إِنِّي أَمْسَيْتُ أُشْهِدُكَ وَأُشْهِدُ حَمَلَةَ عَرْشِكَ وَمَلَائِكَتَكَ', info: 'يُقال 4 مرات', count: 4 },
+  ],
+  nawm: [
+    { text: 'بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا', info: 'عند النوم', count: 1 },
+    { text: 'اللَّهُمَّ قِنِي عَذَابَكَ يَوْمَ تَبْعَثُ عِبَادَكَ', info: 'يُقال 3 مرات', count: 3 },
+    { text: 'سُبْحَانَ اللهِ، الْحَمْدُ للهِ، اللهُ أَكْبَرُ', info: '33 مرة لكل منها', count: 33 },
+    { text: 'آيَةُ الْكُرْسِيِّ — اللهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ', info: 'مرة واحدة', count: 1 },
+  ],
+  salah: [
+    { text: 'أَسْتَغْفِرُ اللهَ', info: 'يُقال 3 مرات', count: 3 },
+    { text: 'اللَّهُمَّ أَنْتَ السَّلَامُ وَمِنْكَ السَّلَامُ تَبَارَكْتَ يَا ذَا الْجَلَالِ وَالْإِكْرَامِ', info: 'مرة واحدة', count: 1 },
+    { text: 'سُبْحَانَ اللهِ', info: '33 مرة', count: 33 },
+    { text: 'الْحَمْدُ للهِ', info: '33 مرة', count: 33 },
+    { text: 'اللهُ أَكْبَرُ', info: '33 مرة', count: 33 },
+    { text: 'لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ', info: 'مرة واحدة', count: 1 },
+  ]
+};
+let zekrCounts = {};
+function showAzkar(cat, el) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  const list = document.getElementById('azkarList');
+  list.innerHTML = azkarData[cat].map((z, i) => `
+    <div class="zekr-card">
+      <div class="zekr-text">${z.text}</div>
+      <div class="zekr-info">${z.info} — المطلوب: ${z.count}</div>
+      <div class="zekr-counter">
+        <button class="zekr-count-btn" onclick="countZekr('${cat}_${i}',${z.count})">+</button>
+        <div class="zekr-count" id="zc_${cat}_${i}">${zekrCounts[cat+'_'+i]||0}</div>
+      </div>
+    </div>
+  `).join('');
+}
+function countZekr(id, max) {
+  zekrCounts[id] = (zekrCounts[id] || 0) + 1;
+  const el = document.getElementById('zc_' + id);
+  if(el) {
+    el.textContent = zekrCounts[id];
+    if(zekrCounts[id] >= max) el.style.color = '#4caf50';
+  }
+}
+showAzkar('sabah', document.querySelector('.cat-btn'));
+
+// ===== القرآن =====
+const quranData = {
+  1: [
+    { n:1, ar:'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', t:'أبدأ باسم الله المتصف بالرحمة الواسعة التي تشمل جميع الخلق' },
+    { n:2, ar:'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ', t:'الثناء كله لله، مالك جميع الخلق ومربيهم' },
+    { n:3, ar:'الرَّحْمَٰنِ الرَّحِيمِ', t:'المتصف بالرحمة الواسعة في الدنيا والآخرة' },
+    { n:4, ar:'مَالِكِ يَوْمِ الدِّينِ', t:'المتفرد بالملك والحكم يوم الجزاء والحساب' },
+    { n:5, ar:'إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ', t:'نخصك وحدك بالعبادة، ونطلب منك وحدك العون' },
+    { n:6, ar:'اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ', t:'أرشدنا إلى الطريق الواضح الموصل إليك' },
+    { n:7, ar:'صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ', t:'طريق الأنبياء والصديقين، لا طريق من غضبت عليهم ولا من ضلوا عن الحق' },
+  ],
+  112: [
+    { n:1, ar:'قُلْ هُوَ اللَّهُ أَحَدٌ', t:'قل يا محمد: الله واحد أحد لا شريك له' },
+    { n:2, ar:'اللَّهُ الصَّمَدُ', t:'الله المقصود في جميع الحاجات، الذي لا يحتاج إلى أحد' },
+    { n:3, ar:'لَمْ يَلِدْ وَلَمْ يُولَدْ', t:'لم يخرج منه شيء، ولم يخرج هو من شيء' },
+    { n:4, ar:'وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ', t:'ولم يكن له مثيل أو نظير من خلقه' },
+  ],
+  113: [
+    { n:1, ar:'قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ', t:'قل: أعتصم وألجأ برب الصبح الذي يشق الظلام' },
+    { n:2, ar:'مِن شَرِّ مَا خَلَقَ', t:'من شر جميع المخلوقات وما قد يصدر منها من أذى' },
+    { n:3, ar:'وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ', t:'ومن شر الليل إذا أقبل بظلامه' },
+    { n:4, ar:'وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ', t:'ومن شر السواحر اللواتي ينفثن في عقد السحر' },
+    { n:5, ar:'وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ', t:'ومن شر كل حاسد يتمنى زوال النعمة عن غيره' },
+  ],
+  114: [
+    { n:1, ar:'قُلْ أَعُوذُ بِرَبِّ النَّاسِ', t:'قل: أعتصم برب البشر جميعاً ومالكهم' },
+    { n:2, ar:'مَلِكِ النَّاسِ', t:'الملك الحقيقي المتصرف في أمور الناس' },
+    { n:3, ar:'إِلَٰهِ النَّاسِ', t:'المعبود الحق الذي تجب عبادته وحده' },
+    { n:4, ar:'مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ', t:'من شر الشيطان الذي يوسوس ثم يتراجع عند ذكر الله' },
+    { n:5, ar:'الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ', t:'الذي يُلقي الوساوس في قلوب الناس' },
+    { n:6, ar:'مِنَ الْجِنَّةِ وَالنَّاسِ', t:'سواء كان هذا الموسوس من الجن أو من الإنس' },
+  ],
+};
+function loadSurah() {
+  const id = document.getElementById('surahSelect').value;
+  const content = document.getElementById('quranContent');
+  if(quranData[id]) {
+    content.innerHTML = quranData[id].map(a => `
+      <div class="ayah-card">
+        <div class="ayah-number">${a.n}</div>
+        <div class="ayah-arabic">${a.ar}</div>
+        <div class="ayah-tafseer">📝 ${a.t}</div>
+      </div>
+    `).join('');
+  } else {
+    content.innerHTML = '<div class="ayah-card"><div class="ayah-tafseer">هذه السورة ستُضاف قريباً 🌙</div></div>';
+  }
+}
+loadSurah();
+
+// Service Worker
+if('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
 }
 </script>
 </body>
