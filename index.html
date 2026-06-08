@@ -228,17 +228,22 @@ border-right:6px solid var(--mushaf-border);
     <button class="icon-btn" onclick="toggleFavSurah()" id="favSurahBtn">🤍</button>
   </div>
   <div class="audio-bar">
-    <button class="play-btn" id="playBtn" onclick="toggleAudio()">▶</button>
-    <div class="audio-info">
-      <select id="reciterSelect" onchange="changeReciter(this.value)" style="background:var(--bg2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:4px 8px;font-family:'Amiri',serif;font-size:12px;">
-  <option value="minsh">المنشاوي</option>
-  <option value="Husary">الحصري</option>
-      </select>
-      <div class="audio-status" id="audioStatus">اضغط تشغيل • اضغط مطولًا على آية للخيارات</div>
-    </div>
-    <button class="clear-sel-btn" id="clearSelBtn" onclick="clearSelection()" style="display:none">✕ إلغاء</button>
-    <audio id="audioPlayer" onended="audioEnded()"></audio>
+  <button class="play-btn" id="playBtn" onclick="toggleAudio()">▶</button>
+  <div class="audio-info">
+    <select id="reciterSelect" onchange="changeReciter()"> <!-- تأكد من اسم الدالة في onchange عندك -->
+      <option value="minsh">المنشاوي</option>
+      <option value="Husary">الحصري</option>
+    </select>
+    <div class="audio-status" id="audioStatus">اضغط تشغيل • اضغط مطولًا على آية للخيارات</div>
   </div>
+  
+  <!-- زرار تحميل الصوت الجديد -->
+  <button id="downloadAudioBtn" onclick="downloadCurrentSurahAudio()" style="background:transparent; border:1px solid var(--gold); color:var(--gold); padding:5px 10px; border-radius:8px; cursor:pointer; font-size:11px; margin-left:5px; font-weight:bold; font-family:'Amiri',serif; transition:all 0.2s;">📥 تحميل الصوت</button>
+  
+  <button class="clear-sel-btn" id="clearSelBtn" onclick="clearSelection()" style="display:none">✕ إلغاء</button>
+  <audio id="audioPlayer" onended="audioEnded()"></audio>
+</div>
+
   <div class="mushaf-pages-wrap">
     <div class="mushaf-slider" id="mushafSlider"></div>
     <div class="page-dots" id="pageDots"></div>
@@ -1486,6 +1491,54 @@ async function downloadAllForOffline() {
     btn.disabled = false;
     btn.style.opacity = '1';
   }
+}
+// ===========================
+// تحميل صوت السورة للأوفلاين
+// ===========================
+async function downloadCurrentSurahAudio() {
+  if (!currentSurah) return;
+  const btn = document.getElementById('downloadAudioBtn');
+  const num = String(currentSurah.n).padStart(3, '0');
+  const audioUrl = `https://server10.mp3quran.net/minsh/${num}.mp3`; // رابط السورة الكاملة للمنشاوي
+  
+  btn.innerHTML = '⏳ جاري...';
+  btn.disabled = true;
+  
+  try {
+    const cache = await caches.open('sadaqa-audio-cache');
+    await cache.add(audioUrl); // دي اللي بتحمل الملف وتحفظه في الموبايل
+    
+    btn.innerHTML = '✅ محملة';
+    btn.style.background = 'var(--gold)';
+    btn.style.color = '#111';
+  } catch (e) {
+    btn.innerHTML = '❌ فشل التحميل';
+    btn.disabled = false;
+    setTimeout(() => { btn.innerHTML = '📥 تحميل الصوت'; }, 3000);
+  }
+}
+
+// دالة عشان تفحص السورة دي متحملة قبل كده ولا لأ أول ما تفتحها
+async function checkAudioCache(surahNum) {
+   const num = String(surahNum).padStart(3, '0');
+   const audioUrl = `https://server10.mp3quran.net/minsh/${num}.mp3`;
+   const btn = document.getElementById('downloadAudioBtn');
+   
+   try {
+       const cache = await caches.open('sadaqa-audio-cache');
+       const exists = await cache.match(audioUrl);
+       if(exists) {
+           btn.innerHTML = '✅ محملة';
+           btn.style.background = 'var(--gold)';
+           btn.style.color = '#111';
+           btn.disabled = true;
+       } else {
+           btn.innerHTML = '📥 تحميل الصوت';
+           btn.style.background = 'transparent';
+           btn.style.color = 'var(--gold)';
+           btn.disabled = false;
+       }
+   } catch(e) {}
 }
 
 </script>
