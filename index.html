@@ -192,6 +192,7 @@ border-right:6px solid var(--mushaf-border);
   <div class="tab" onclick="showPage('quran',this)">📖 القرآن</div>
   <div class="tab" onclick="showPage('azkar',this)">🤲 الأذكار</div>
   <div class="tab" onclick="showPage('tasbeh',this)">📿 السبحة</div>
+  <div class="tab" onclick="showPage('arbaeen',this)">🌿 الأربعين النووية</div>
   <div class="tab" onclick="showPage('favPage',this)">⭐ المفضلة</div>
 </div>
 
@@ -273,7 +274,10 @@ border-right:6px solid var(--mushaf-border);
     <div class="tasbeh-totals" id="tasbehTotal"></div>
   </div>
 </div>
-
+<!-- ARBAEEN -->
+<div class="page" id="arbaeen">
+  <div id="arbaeenContent"></div>
+</div>
 <!-- FAVORITES -->
 <div class="page" id="favPage">
   <div id="favContent"></div>
@@ -813,6 +817,7 @@ function showPage(id, el) {
   document.getElementById(id).classList.add('active');
   el.classList.add('active');
   if(id === 'favPage') renderFav();
+  if(id === 'arbaeen') renderArbaeen();
   updateStats();
 }
 
