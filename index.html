@@ -80,14 +80,18 @@ body{font-family:'Amiri',serif;background:var(--bg);color:var(--text);min-height
 .mushaf-pages-wrap{flex:1;overflow:hidden;position:relative;}
 .mushaf-slider{display:flex;flex-direction:row-reverse;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;height:100%;scrollbar-width:none;}
 .mushaf-slider::-webkit-scrollbar{display:none;}
-.mushaf-page{
-  flex:0 0 100vw;width:100vw;scroll-snap-align:center;
-  padding:18px 18px 30px;overflow-y:auto;
-  background:var(--mushaf-bg);color:var(--mushaf-text);
-  font-family:'Amiri Quran',serif;font-size:24px;line-height:2.5;
-  text-align:justify;text-justify:inter-word;
-  border-right:4px solid var(--mushaf-border);
+.mushaf-page {
+  flex: 0 0 100vw; width: 100vw; scroll-snap-align: center;
+  padding: 40px 25px 60px 25px; /* هوامش تشبه المصحف */
+  overflow-y: auto;
+  background: var(--mushaf-bg); color: var(--mushaf-text);
+  font-family: 'Amiri Quran', serif;
+  font-size: 26px; /* حجم خط ممتاز */
+  line-height: 2.8; /* تباعد الأسطر زي المصحف */
+  text-align: justify;
+  text-justify: inter-word;
 }
+
 .mushaf-page:first-child{border-right:none;}
 .surah-name-header{
   text-align:center;font-size:20px;font-weight:700;
