@@ -1,7 +1,7 @@
 const CACHE_NAME = 'sadaqa-static-v2';
 const QURAN_CACHE = 'sadaqa-quran-data';
+const AUDIO_CACHE = 'sadaqa-audio-cache';
 
-// وقت التسطيب: بنحفظ الملفات الأساسية (HTML و CSS و JS)
 self.addEventListener('install', e => {
   self.skipWaiting();
   e.waitUntil(
@@ -11,31 +11,35 @@ self.addEventListener('install', e => {
   );
 });
 
-// وقت تفعيل الـ Service Worker
 self.addEventListener('activate', e => {
   e.waitUntil(self.clients.claim());
 });
 
-// وقت طلب أي داتا (Fetch)
 self.addEventListener('fetch', e => {
-  // لو الطلب رايح لسيرفر الآيات
-  if (e.request.url.includes('api.alquran.cloud')) {
+  const url = e.request.url;
+  
+  // لو الطلب رايح لـ API الآيات أو ملفات الصوت
+  if (url.includes('api.alquran.cloud') || url.includes('mp3quran.net') || url.includes('islamic.network')) {
     e.respondWith(
       caches.match(e.request).then(cachedResponse => {
-        // لو الداتا موجودة في الموبايل (Cache)، هاتها من غير نت
+        // لو متخزن في الموبايل هاته أوفلاين
         if (cachedResponse) return cachedResponse;
         
-        // لو مش موجودة، روح هاتها من النت واحفظها للمرات الجاية
         return fetch(e.request).then(networkResponse => {
-          return caches.open(QURAN_CACHE).then(cache => {
-            cache.put(e.request, networkResponse.clone());
-            return networkResponse;
-          });
+          // بنخزن الآيات بس تلقائي عشان مساحتها صغيرة
+          if (url.includes('api.alquran.cloud')) {
+              const clonedResponse = networkResponse.clone();
+              caches.open(QURAN_CACHE).then(cache => {
+                cache.put(e.request, clonedResponse);
+              });
+          }
+          // ملفات الصوت مش بنخزنها تلقائي، بنسيبها لزرار التحميل اللي عملناه
+          return networkResponse;
         });
       })
     );
   } else {
-    // لو الطلب لملفات عادية (صور، ستايل، الخ)
+    // ملفات التطبيق العادية
     e.respondWith(
       caches.match(e.request).then(response => {
         return response || fetch(e.request);
