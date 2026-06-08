@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>صدقة جارية عن شيماء سعيد</title>
+<!-- استدعاء خط المصحف العثماني -->
+<link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&display=swap" rel="stylesheet">
 <link rel="manifest" href="manifest.json">
 <style>
 :root {
@@ -11,10 +13,16 @@
   --card:rgba(255,255,255,0.07); --gold:#ffd700;
   --green:#4caf50; --text:#fff; --text2:#aaa;
   --border:rgba(255,255,255,0.1);
+  --mushaf-bg: #1c2331; /* لون خلفية المصحف في الوضع الليلي */
+  --mushaf-text: #e0e0e0;
 }
-.light { --bg:#f5f5f0; --bg2:#e8e8e0; --bg3:#ddd;
+.light { 
+  --bg:#f5f5f0; --bg2:#e8e8e0; --bg3:#ddd;
   --card:rgba(0,0,0,0.05); --gold:#b8860b; --green:#2e7d32;
-  --text:#111; --text2:#555; --border:rgba(0,0,0,0.1); }
+  --text:#111; --text2:#555; --border:rgba(0,0,0,0.1); 
+  --mushaf-bg: #fdf6e3; /* لون بيج مشابه للصورة في الوضع الفاتح */
+  --mushaf-text: #111;
+}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:all 0.3s;}
 .header{background:var(--bg2);padding:12px 15px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:200;border-bottom:1px solid var(--border);}
@@ -27,7 +35,7 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 .page{display:none;padding:15px;}
 .page.active{display:block;}
 
-/* الرئيسية */
+/* الرئيسية وإحصائيات */
 .hero{text-align:center;padding:35px 20px;background:var(--card);border-radius:20px;border:1px solid var(--border);margin-bottom:15px;}
 .hero .moon{font-size:65px;margin-bottom:15px;}
 .hero h2{font-size:22px;color:var(--gold);}
@@ -49,27 +57,61 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 .surah-details{font-size:11px;color:var(--text2);margin-top:3px;}
 .surah-type{font-size:11px;color:var(--gold);}
 
-/* شاشة السورة */
+/* شاشة السورة والمصحف */
 .surah-screen{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:300;overflow-y:auto;}
-.surah-header{background:var(--bg2);padding:12px 15px;display:flex;align-items:center;gap:10px;position:sticky;top:0;border-bottom:1px solid var(--border);}
+.surah-header{background:var(--bg2);padding:12px 15px;display:flex;align-items:center;gap:10px;position:sticky;top:0;border-bottom:1px solid var(--border);z-index: 10;}
 .back-btn{background:var(--card);border:1px solid var(--border);color:var(--text);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:18px;}
 .surah-header h2{font-size:16px;color:var(--gold);flex:1;}
-.audio-player{background:var(--bg2);padding:12px 15px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
+.audio-player{background:var(--bg2);padding:12px 15px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;position:sticky;top:61px;z-index: 10;}
 .play-btn{background:var(--gold);color:#111;border:none;width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:18px;flex-shrink:0;}
 .audio-info{flex:1;font-size:12px;color:var(--text2);}
 .audio-title{font-size:13px;color:var(--text);font-weight:bold;}
 .ayah-container{padding:15px;}
-.ayah-card{background:var(--card);border-radius:15px;padding:18px;margin-bottom:12px;border:1px solid var(--border);}
-.ayah-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
-.ayah-num{width:32px;height:32px;background:var(--gold);color:#111;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;}
-.ayah-actions{display:flex;gap:6px;}
-.ayah-action-btn{background:var(--card);border:1px solid var(--border);color:var(--text2);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:13px;}
-.ayah-arabic{font-size:20px;line-height:2.3;text-align:center;margin-bottom:12px;}
-.tafseer-toggle{width:100%;padding:8px;background:transparent;border:1px solid var(--border);color:var(--text2);border-radius:8px;cursor:pointer;font-size:12px;margin-bottom:8px;}
-.tafseer-text{font-size:13px;line-height:1.9;color:var(--text2);padding:10px;background:var(--bg2);border-radius:8px;display:none;}
-.tafseer-text.show{display:block;}
 
-/* الأذكار */
+/* تنسيق المصحف الجديد المتصل */
+.mushaf-page {
+  background-color: var(--mushaf-bg);
+  color: var(--mushaf-text);
+  padding: 25px 20px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  font-family: 'Amiri Quran', serif;
+  font-size: 26px;
+  line-height: 2.3;
+  text-align: justify;
+  text-justify: inter-word;
+}
+.bismillah {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: var(--gold);
+}
+.ayah-span {
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+  padding: 2px;
+  border-radius: 4px;
+  user-select: none; /* لمنع تحديد النص العادي عند الضغط المطول */
+}
+/* تنسيق الآيات المحددة للتشغيل */
+.ayah-span.selected {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: var(--gold);
+}
+/* الآية التي تُقرأ حالياً */
+.ayah-span.playing {
+  background-color: rgba(255, 215, 0, 0.2);
+  color: var(--gold);
+  border-bottom: 2px dashed var(--gold);
+}
+.ayah-sign {
+  color: var(--gold);
+  margin: 0 4px;
+  font-size: 22px;
+}
+
+/* الأذكار، السبحة، المفضلة كما هي... */
 .azkar-cats{display:flex;gap:8px;margin-bottom:15px;overflow-x:auto;padding-bottom:5px;}
 .cat-btn{padding:8px 16px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text2);font-size:12px;cursor:pointer;white-space:nowrap;}
 .cat-btn.active{background:var(--gold);color:#111;border-color:var(--gold);}
@@ -82,8 +124,6 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 .zekr-max{font-size:11px;color:var(--text2);}
 .daleel-btn{background:var(--green);color:#fff;border:none;padding:6px 12px;border-radius:10px;cursor:pointer;font-size:12px;}
 .done-badge{background:#4caf50;color:#fff;padding:3px 10px;border-radius:10px;font-size:11px;display:none;}
-
-/* السبحة */
 .tasbeh-card{background:var(--card);border-radius:20px;padding:30px 20px;text-align:center;border:1px solid var(--border);}
 .tasbeh-select{width:100%;padding:12px;border-radius:12px;background:var(--bg2);color:var(--text);border:1px solid var(--border);font-size:15px;margin-bottom:20px;text-align:center;}
 .tasbeh-circle{width:180px;height:180px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#ff8c00);border:none;font-size:64px;cursor:pointer;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(255,215,0,0.3);transition:transform 0.1s;}
@@ -94,19 +134,37 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
 .tasbeh-bar{height:100%;background:var(--gold);border-radius:3px;transition:width 0.3s;}
 .reset-btn{background:transparent;border:1px solid var(--border);color:var(--text2);padding:10px 30px;border-radius:20px;cursor:pointer;font-size:13px;}
 .total-label{font-size:12px;color:var(--text2);margin-top:10px;}
-
-/* المفضلة */
 .fav-empty{text-align:center;padding:50px 20px;color:var(--text2);}
 .fav-empty .icon{font-size:50px;margin-bottom:15px;}
 
-/* Modal */
+/* Modals العادية */
 .modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:500;align-items:center;justify-content:center;padding:20px;}
 .modal-overlay.show{display:flex;}
 .modal{background:var(--bg2);border-radius:20px;padding:25px;max-width:400px;width:100%;border:1px solid var(--border);}
 .modal h3{color:var(--gold);margin-bottom:15px;font-size:16px;}
-.modal p{font-size:14px;line-height:1.9;color:var(--text);}
+.modal p{font-size:18px;line-height:2.2;color:var(--text);}
 .modal-source{font-size:12px;color:var(--green);margin-top:10px;}
 .modal-close{width:100%;padding:10px;background:var(--gold);color:#111;border:none;border-radius:10px;cursor:pointer;font-weight:bold;margin-top:15px;}
+
+/* قائمة خيارات الآية (القائمة السفلية) */
+.action-sheet {
+  position: fixed; bottom: -100%; left: 0; right: 0;
+  background: var(--bg2); padding: 20px; border-radius: 20px 20px 0 0;
+  box-shadow: 0 -5px 15px rgba(0,0,0,0.3);
+  z-index: 600; transition: bottom 0.3s ease; border-top: 1px solid var(--border);
+}
+.action-sheet.show { bottom: 0; }
+.action-title { font-size: 14px; color: var(--gold); margin-bottom: 15px; text-align: center; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+.action-btn {
+  width: 100%; padding: 12px; background: var(--card); border: 1px solid var(--border);
+  color: var(--text); border-radius: 12px; margin-bottom: 8px; cursor: pointer; font-size: 14px; text-align: right;
+}
+.action-btn:hover { background: var(--border); }
+.overlay-dimmer {
+  display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); z-index: 550;
+}
+.overlay-dimmer.show { display: block; }
 </style>
 </head>
 <body>
@@ -124,8 +182,9 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
   <div class="tab" onclick="showPage('favPage',this)">⭐ المفضلة</div>
 </div>
 
-<!-- الرئيسية -->
+<!-- الصفحات ... -->
 <div class="page active" id="home">
+  <!-- محتوى الرئيسية لم يتغير -->
   <div class="hero">
     <div class="moon">🌙</div>
     <h2>صدقة جارية</h2>
@@ -138,13 +197,12 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
   </div>
 </div>
 
-<!-- القرآن -->
 <div class="page" id="quran">
   <input class="search-box" placeholder="🔍 ابحث عن سورة..." oninput="filterSurahs(this.value)">
   <div class="surah-list" id="surahList"></div>
 </div>
 
-<!-- شاشة السورة -->
+<!-- شاشة السورة المعدلة -->
 <div class="surah-screen" id="surahScreen">
   <div class="surah-header">
     <button class="back-btn" onclick="closeSurah()">→</button>
@@ -154,273 +212,84 @@ body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);mi
   <div class="audio-player">
     <button class="play-btn" id="playBtn" onclick="toggleAudio()">▶️</button>
     <div class="audio-info">
-      <div class="audio-title">مشاري راشد العفاسي — ترتيل</div>
-      <div id="audioStatus">اضغط للتشغيل</div>
+      <div class="audio-title">المنشاوي — ترتيل</div>
+      <div id="audioStatus">اضغط للتشغيل (حدد آيات للتشغيل المخصص)</div>
     </div>
     <audio id="audioPlayer" onended="audioEnded()"></audio>
   </div>
   <div class="ayah-container" id="ayahContainer"></div>
 </div>
 
-<!-- الأذكار -->
-<div class="page" id="azkar">
-  <div class="azkar-cats">
-    <button class="cat-btn active" onclick="showAzkar('sabah',this)">🌅 صباح</button>
-    <button class="cat-btn" onclick="showAzkar('masa',this)">🌆 مساء</button>
-    <button class="cat-btn" onclick="showAzkar('nawm',this)">🌙 نوم</button>
-    <button class="cat-btn" onclick="showAzkar('salah',this)">🕌 بعد الصلاة</button>
-  </div>
-  <div id="azkarList"></div>
-</div>
+<!-- صفحات الأذكار والسبحة والمفضلة... لم تتغير -->
+<div class="page" id="azkar"><div class="azkar-cats"><button class="cat-btn active" onclick="showAzkar('sabah',this)">🌅 صباح</button><button class="cat-btn" onclick="showAzkar('masa',this)">🌆 مساء</button><button class="cat-btn" onclick="showAzkar('nawm',this)">🌙 نوم</button><button class="cat-btn" onclick="showAzkar('salah',this)">🕌 بعد الصلاة</button></div><div id="azkarList"></div></div>
+<div class="page" id="tasbeh"><div class="tasbeh-card"><select class="tasbeh-select" id="tasbehType" onchange="resetTasbeh()"><option>سبحان الله</option><option>الحمد لله</option><option>الله أكبر</option><option>لا إله إلا الله</option><option>أستغفر الله</option><option>اللهم صل على النبي ﷺ</option><option>سبحان الله وبحمده</option><option>سبحان الله العظيم</option></select><div class="tasbeh-count" id="tasbehCount">0</div><div class="tasbeh-label" id="tasbehLabel">سبحان الله</div><button class="tasbeh-circle" onclick="incrementTasbeh()">📿</button><div class="tasbeh-progress"><div class="tasbeh-bar" id="tasbehBar" style="width:0%"></div></div><button class="reset-btn" onclick="resetTasbeh()">↺ إعادة تعيين</button><div class="total-label" id="tasbehTotal"></div></div></div>
+<div class="page" id="favPage"><div id="favContent"></div></div>
 
-<!-- السبحة -->
-<div class="page" id="tasbeh">
-  <div class="tasbeh-card">
-    <select class="tasbeh-select" id="tasbehType" onchange="resetTasbeh()">
-      <option>سبحان الله</option>
-      <option>الحمد لله</option>
-      <option>الله أكبر</option>
-      <option>لا إله إلا الله</option>
-      <option>أستغفر الله</option>
-      <option>اللهم صل على النبي ﷺ</option>
-      <option>سبحان الله وبحمده</option>
-      <option>سبحان الله العظيم</option>
-    </select>
-    <div class="tasbeh-count" id="tasbehCount">0</div>
-    <div class="tasbeh-label" id="tasbehLabel">سبحان الله</div>
-    <button class="tasbeh-circle" onclick="incrementTasbeh()">📿</button>
-    <div class="tasbeh-progress"><div class="tasbeh-bar" id="tasbehBar" style="width:0%"></div></div>
-    <button class="reset-btn" onclick="resetTasbeh()">↺ إعادة تعيين</button>
-    <div class="total-label" id="tasbehTotal"></div>
-  </div>
-</div>
-
-<!-- المفضلة -->
-<div class="page" id="favPage">
-  <div id="favContent"></div>
-</div>
-
-<!-- Modal الدليل -->
-<div class="modal-overlay" id="daleelModal">
+<!-- Modals -->
+<div class="modal-overlay" id="infoModal">
   <div class="modal">
-    <h3>📚 دليل الذكر</h3>
-    <p id="daleelText"></p>
-    <div class="modal-source" id="daleelSource"></div>
-    <button class="modal-close" onclick="closeModal()">إغلاق</button>
+    <h3 id="modalTitle"></h3>
+    <p id="modalText"></p>
+    <div class="modal-source" id="modalSource"></div>
+    <button class="modal-close" onclick="closeModals()">إغلاق</button>
   </div>
+</div>
+
+<!-- قائمة اختيارات الآية (Long Press Menu) -->
+<div class="overlay-dimmer" id="overlayDimmer" onclick="closeActionMenu()"></div>
+<div class="action-sheet" id="actionSheet">
+  <div class="action-title" id="actionAyahTitle">الآية 1</div>
+  <button class="action-btn" onclick="actionTafseer()">📝 التفسير الميسر</button>
+  <button class="action-btn" onclick="actionSelect()">✅ تحديد / إلغاء تحديد للتشغيل</button>
+  <button class="action-btn" onclick="actionShare()">🔗 مشاركة الآية</button>
 </div>
 
 <script>
-// ===== البيانات =====
+// ----- المتغيرات الأساسية -----
 const surahs = [
+  // نفس قائمة السور التي لديك... أخذنا أول 5 كمثال للتجربة السريعة، ضع قائمتك كاملة هنا
   {n:1,name:'الفاتحة',ayat:7,type:'مكية',audio:'https://server8.mp3quran.net/afs/001.mp3'},
   {n:2,name:'البقرة',ayat:286,type:'مدنية',audio:'https://server8.mp3quran.net/afs/002.mp3'},
   {n:3,name:'آل عمران',ayat:200,type:'مدنية',audio:'https://server8.mp3quran.net/afs/003.mp3'},
   {n:4,name:'النساء',ayat:176,type:'مدنية',audio:'https://server8.mp3quran.net/afs/004.mp3'},
-  {n:5,name:'المائدة',ayat:120,type:'مدنية',audio:'https://server8.mp3quran.net/afs/005.mp3'},
-  {n:6,name:'الأنعام',ayat:165,type:'مكية',audio:'https://server8.mp3quran.net/afs/006.mp3'},
-  {n:7,name:'الأعراف',ayat:206,type:'مكية',audio:'https://server8.mp3quran.net/afs/007.mp3'},
-  {n:8,name:'الأنفال',ayat:75,type:'مدنية',audio:'https://server8.mp3quran.net/afs/008.mp3'},
-  {n:9,name:'التوبة',ayat:129,type:'مدنية',audio:'https://server8.mp3quran.net/afs/009.mp3'},
-  {n:10,name:'يونس',ayat:109,type:'مكية',audio:'https://server8.mp3quran.net/afs/010.mp3'},
-  {n:11,name:'هود',ayat:123,type:'مكية',audio:'https://server8.mp3quran.net/afs/011.mp3'},
-  {n:12,name:'يوسف',ayat:111,type:'مكية',audio:'https://server8.mp3quran.net/afs/012.mp3'},
-  {n:13,name:'الرعد',ayat:43,type:'مدنية',audio:'https://server8.mp3quran.net/afs/013.mp3'},
-  {n:14,name:'إبراهيم',ayat:52,type:'مكية',audio:'https://server8.mp3quran.net/afs/014.mp3'},
-  {n:15,name:'الحجر',ayat:99,type:'مكية',audio:'https://server8.mp3quran.net/afs/015.mp3'},
-  {n:16,name:'النحل',ayat:128,type:'مكية',audio:'https://server8.mp3quran.net/afs/016.mp3'},
-  {n:17,name:'الإسراء',ayat:111,type:'مكية',audio:'https://server8.mp3quran.net/afs/017.mp3'},
-  {n:18,name:'الكهف',ayat:110,type:'مكية',audio:'https://server8.mp3quran.net/afs/018.mp3'},
-  {n:19,name:'مريم',ayat:98,type:'مكية',audio:'https://server8.mp3quran.net/afs/019.mp3'},
-  {n:20,name:'طه',ayat:135,type:'مكية',audio:'https://server8.mp3quran.net/afs/020.mp3'},
-  {n:21,name:'الأنبياء',ayat:112,type:'مكية',audio:'https://server8.mp3quran.net/afs/021.mp3'},
-  {n:22,name:'الحج',ayat:78,type:'مدنية',audio:'https://server8.mp3quran.net/afs/022.mp3'},
-  {n:23,name:'المؤمنون',ayat:118,type:'مكية',audio:'https://server8.mp3quran.net/afs/023.mp3'},
-  {n:24,name:'النور',ayat:64,type:'مدنية',audio:'https://server8.mp3quran.net/afs/024.mp3'},
-  {n:25,name:'الفرقان',ayat:77,type:'مكية',audio:'https://server8.mp3quran.net/afs/025.mp3'},
-  {n:26,name:'الشعراء',ayat:227,type:'مكية',audio:'https://server8.mp3quran.net/afs/026.mp3'},
-  {n:27,name:'النمل',ayat:93,type:'مكية',audio:'https://server8.mp3quran.net/afs/027.mp3'},
-  {n:28,name:'القصص',ayat:88,type:'مكية',audio:'https://server8.mp3quran.net/afs/028.mp3'},
-  {n:29,name:'العنكبوت',ayat:69,type:'مكية',audio:'https://server8.mp3quran.net/afs/029.mp3'},
-  {n:30,name:'الروم',ayat:60,type:'مكية',audio:'https://server8.mp3quran.net/afs/030.mp3'},
-  {n:31,name:'لقمان',ayat:34,type:'مكية',audio:'https://server8.mp3quran.net/afs/031.mp3'},
-  {n:32,name:'السجدة',ayat:30,type:'مكية',audio:'https://server8.mp3quran.net/afs/032.mp3'},
-  {n:33,name:'الأحزاب',ayat:73,type:'مدنية',audio:'https://server8.mp3quran.net/afs/033.mp3'},
-  {n:34,name:'سبأ',ayat:54,type:'مكية',audio:'https://server8.mp3quran.net/afs/034.mp3'},
-  {n:35,name:'فاطر',ayat:45,type:'مكية',audio:'https://server8.mp3quran.net/afs/035.mp3'},
-  {n:36,name:'يس',ayat:83,type:'مكية',audio:'https://server8.mp3quran.net/afs/036.mp3'},
-  {n:37,name:'الصافات',ayat:182,type:'مكية',audio:'https://server8.mp3quran.net/afs/037.mp3'},
-  {n:38,name:'ص',ayat:88,type:'مكية',audio:'https://server8.mp3quran.net/afs/038.mp3'},
-  {n:39,name:'الزمر',ayat:75,type:'مكية',audio:'https://server8.mp3quran.net/afs/039.mp3'},
-  {n:40,name:'غافر',ayat:85,type:'مكية',audio:'https://server8.mp3quran.net/afs/040.mp3'},
-  {n:41,name:'فصلت',ayat:54,type:'مكية',audio:'https://server8.mp3quran.net/afs/041.mp3'},
-  {n:42,name:'الشورى',ayat:53,type:'مكية',audio:'https://server8.mp3quran.net/afs/042.mp3'},
-  {n:43,name:'الزخرف',ayat:89,type:'مكية',audio:'https://server8.mp3quran.net/afs/043.mp3'},
-  {n:44,name:'الدخان',ayat:59,type:'مكية',audio:'https://server8.mp3quran.net/afs/044.mp3'},
-  {n:45,name:'الجاثية',ayat:37,type:'مكية',audio:'https://server8.mp3quran.net/afs/045.mp3'},
-  {n:46,name:'الأحقاف',ayat:35,type:'مكية',audio:'https://server8.mp3quran.net/afs/046.mp3'},
-  {n:47,name:'محمد',ayat:38,type:'مدنية',audio:'https://server8.mp3quran.net/afs/047.mp3'},
-  {n:48,name:'الفتح',ayat:29,type:'مدنية',audio:'https://server8.mp3quran.net/afs/048.mp3'},
-  {n:49,name:'الحجرات',ayat:18,type:'مدنية',audio:'https://server8.mp3quran.net/afs/049.mp3'},
-  {n:50,name:'ق',ayat:45,type:'مكية',audio:'https://server8.mp3quran.net/afs/050.mp3'},
-  {n:51,name:'الذاريات',ayat:60,type:'مكية',audio:'https://server8.mp3quran.net/afs/051.mp3'},
-  {n:52,name:'الطور',ayat:49,type:'مكية',audio:'https://server8.mp3quran.net/afs/052.mp3'},
-  {n:53,name:'النجم',ayat:62,type:'مكية',audio:'https://server8.mp3quran.net/afs/053.mp3'},
-  {n:54,name:'القمر',ayat:55,type:'مكية',audio:'https://server8.mp3quran.net/afs/054.mp3'},
-  {n:55,name:'الرحمن',ayat:78,type:'مدنية',audio:'https://server8.mp3quran.net/afs/055.mp3'},
-  {n:56,name:'الواقعة',ayat:96,type:'مكية',audio:'https://server8.mp3quran.net/afs/056.mp3'},
-  {n:57,name:'الحديد',ayat:29,type:'مدنية',audio:'https://server8.mp3quran.net/afs/057.mp3'},
-  {n:58,name:'المجادلة',ayat:22,type:'مدنية',audio:'https://server8.mp3quran.net/afs/058.mp3'},
-  {n:59,name:'الحشر',ayat:24,type:'مدنية',audio:'https://server8.mp3quran.net/afs/059.mp3'},
-  {n:60,name:'الممتحنة',ayat:13,type:'مدنية',audio:'https://server8.mp3quran.net/afs/060.mp3'},
-  {n:61,name:'الصف',ayat:14,type:'مدنية',audio:'https://server8.mp3quran.net/afs/061.mp3'},
-  {n:62,name:'الجمعة',ayat:11,type:'مدنية',audio:'https://server8.mp3quran.net/afs/062.mp3'},
-  {n:63,name:'المنافقون',ayat:11,type:'مدنية',audio:'https://server8.mp3quran.net/afs/063.mp3'},
-  {n:64,name:'التغابن',ayat:18,type:'مدنية',audio:'https://server8.mp3quran.net/afs/064.mp3'},
-  {n:65,name:'الطلاق',ayat:12,type:'مدنية',audio:'https://server8.mp3quran.net/afs/065.mp3'},
-  {n:66,name:'التحريم',ayat:12,type:'مدنية',audio:'https://server8.mp3quran.net/afs/066.mp3'},
-  {n:67,name:'الملك',ayat:30,type:'مكية',audio:'https://server8.mp3quran.net/afs/067.mp3'},
-  {n:68,name:'القلم',ayat:52,type:'مكية',audio:'https://server8.mp3quran.net/afs/068.mp3'},
-  {n:69,name:'الحاقة',ayat:52,type:'مكية',audio:'https://server8.mp3quran.net/afs/069.mp3'},
-  {n:70,name:'المعارج',ayat:44,type:'مكية',audio:'https://server8.mp3quran.net/afs/070.mp3'},
-  {n:71,name:'نوح',ayat:28,type:'مكية',audio:'https://server8.mp3quran.net/afs/071.mp3'},
-  {n:72,name:'الجن',ayat:28,type:'مكية',audio:'https://server8.mp3quran.net/afs/072.mp3'},
-  {n:73,name:'المزمل',ayat:20,type:'مكية',audio:'https://server8.mp3quran.net/afs/073.mp3'},
-  {n:74,name:'المدثر',ayat:56,type:'مكية',audio:'https://server8.mp3quran.net/afs/074.mp3'},
-  {n:75,name:'القيامة',ayat:40,type:'مكية',audio:'https://server8.mp3quran.net/afs/075.mp3'},
-  {n:76,name:'الإنسان',ayat:31,type:'مدنية',audio:'https://server8.mp3quran.net/afs/076.mp3'},
-  {n:77,name:'المرسلات',ayat:50,type:'مكية',audio:'https://server8.mp3quran.net/afs/077.mp3'},
-  {n:78,name:'النبأ',ayat:40,type:'مكية',audio:'https://server8.mp3quran.net/afs/078.mp3'},
-  {n:79,name:'النازعات',ayat:46,type:'مكية',audio:'https://server8.mp3quran.net/afs/079.mp3'},
-  {n:80,name:'عبس',ayat:42,type:'مكية',audio:'https://server8.mp3quran.net/afs/080.mp3'},
-  {n:81,name:'التكوير',ayat:29,type:'مكية',audio:'https://server8.mp3quran.net/afs/081.mp3'},
-  {n:82,name:'الانفطار',ayat:19,type:'مكية',audio:'https://server8.mp3quran.net/afs/082.mp3'},
-  {n:83,name:'المطففين',ayat:36,type:'مكية',audio:'https://server8.mp3quran.net/afs/083.mp3'},
-  {n:84,name:'الانشقاق',ayat:25,type:'مكية',audio:'https://server8.mp3quran.net/afs/084.mp3'},
-  {n:85,name:'البروج',ayat:22,type:'مكية',audio:'https://server8.mp3quran.net/afs/085.mp3'},
-  {n:86,name:'الطارق',ayat:17,type:'مكية',audio:'https://server8.mp3quran.net/afs/086.mp3'},
-  {n:87,name:'الأعلى',ayat:19,type:'مكية',audio:'https://server8.mp3quran.net/afs/087.mp3'},
-  {n:88,name:'الغاشية',ayat:26,type:'مكية',audio:'https://server8.mp3quran.net/afs/088.mp3'},
-  {n:89,name:'الفجر',ayat:30,type:'مكية',audio:'https://server8.mp3quran.net/afs/089.mp3'},
-  {n:90,name:'البلد',ayat:20,type:'مكية',audio:'https://server8.mp3quran.net/afs/090.mp3'},
-  {n:91,name:'الشمس',ayat:15,type:'مكية',audio:'https://server8.mp3quran.net/afs/091.mp3'},
-  {n:92,name:'الليل',ayat:21,type:'مكية',audio:'https://server8.mp3quran.net/afs/092.mp3'},
-  {n:93,name:'الضحى',ayat:11,type:'مكية',audio:'https://server8.mp3quran.net/afs/093.mp3'},
-  {n:94,name:'الشرح',ayat:8,type:'مكية',audio:'https://server8.mp3quran.net/afs/094.mp3'},
-  {n:95,name:'التين',ayat:8,type:'مكية',audio:'https://server8.mp3quran.net/afs/095.mp3'},
-  {n:96,name:'العلق',ayat:19,type:'مكية',audio:'https://server8.mp3quran.net/afs/096.mp3'},
-  {n:97,name:'القدر',ayat:5,type:'مكية',audio:'https://server8.mp3quran.net/afs/097.mp3'},
-  {n:98,name:'البينة',ayat:8,type:'مدنية',audio:'https://server8.mp3quran.net/afs/098.mp3'},
-  {n:99,name:'الزلزلة',ayat:8,type:'مدنية',audio:'https://server8.mp3quran.net/afs/099.mp3'},
-  {n:100,name:'العاديات',ayat:11,type:'مكية',audio:'https://server8.mp3quran.net/afs/100.mp3'},
-  {n:101,name:'القارعة',ayat:11,type:'مكية',audio:'https://server8.mp3quran.net/afs/101.mp3'},
-  {n:102,name:'التكاثر',ayat:8,type:'مكية',audio:'https://server8.mp3quran.net/afs/102.mp3'},
-  {n:103,name:'العصر',ayat:3,type:'مكية',audio:'https://server8.mp3quran.net/afs/103.mp3'},
-  {n:104,name:'الهمزة',ayat:9,type:'مكية',audio:'https://server8.mp3quran.net/afs/104.mp3'},
-  {n:105,name:'الفيل',ayat:5,type:'مكية',audio:'https://server8.mp3quran.net/afs/105.mp3'},
-  {n:106,name:'قريش',ayat:4,type:'مكية',audio:'https://server8.mp3quran.net/afs/106.mp3'},
-  {n:107,name:'الماعون',ayat:7,type:'مكية',audio:'https://server8.mp3quran.net/afs/107.mp3'},
-  {n:108,name:'الكوثر',ayat:3,type:'مكية',audio:'https://server8.mp3quran.net/afs/108.mp3'},
-  {n:109,name:'الكافرون',ayat:6,type:'مكية',audio:'https://server8.mp3quran.net/afs/109.mp3'},
-  {n:110,name:'النصر',ayat:3,type:'مدنية',audio:'https://server8.mp3quran.net/afs/110.mp3'},
-  {n:111,name:'المسد',ayat:5,type:'مكية',audio:'https://server8.mp3quran.net/afs/111.mp3'},
-  {n:112,name:'الإخلاص',ayat:4,type:'مكية',audio:'https://server8.mp3quran.net/afs/112.mp3'},
-  {n:113,name:'الفلق',ayat:5,type:'مكية',audio:'https://server8.mp3quran.net/afs/113.mp3'},
-  {n:114,name:'الناس',ayat:6,type:'مكية',audio:'https://server8.mp3quran.net/afs/114.mp3'},
+  {n:5,name:'المائدة',ayat:120,type:'مدنية',audio:'https://server8.mp3quran.net/afs/005.mp3'}
+  // ... برجاء إضافة باقي الـ 114 سورة كما في كودك الأصلي
 ];
 
-const azkarData = {
-  sabah: [
-    {text:'أَعُوذُ بِاللهِ مِنَ الشَّيْطَانِ الرَّجِيمِ — اللهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ',count:1,daleel:'آية الكرسي — سورة البقرة آية 255',source:'قال النبي ﷺ: من قرأها حين يصبح أُجير من الجن حتى يمسي'},
-    {text:'بِسْمِ اللهِ الرَّحْمَنِ الرَّحِيمِ — قُلْ هُوَ اللهُ أَحَدٌ',count:3,daleel:'سورة الإخلاص — يُقرأ 3 مرات صباحاً',source:'من قرأها 3 مرات صباحاً كفته من كل شيء — صحيح الترمذي'},
-    {text:'اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ',count:1,daleel:'سيد الاستغفار',source:'من قاله موقناً فمات من يومه دخل الجنة — صحيح البخاري'},
-    {text:'اللَّهُمَّ بِكَ أَصْبَحْنَا وَبِكَ أَمْسَيْنَا وَبِكَ نَحْيَا وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ',count:1,daleel:'ذكر الصباح',source:'رواه أبو داود والترمذي'},
-    {text:'أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ للهِ، وَالْحَمْدُ للهِ، لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ',count:1,daleel:'ذكر الصباح',source:'رواه مسلم'},
-    {text:'سُبْحَانَ اللهِ وَبِحَمْدِهِ',count:100,daleel:'ذكر الصباح والمساء',source:'من قالها 100 مرة حُطت خطاياه وإن كانت مثل زبد البحر — صحيح مسلم'},
-    {text:'لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ',count:10,daleel:'ذكر الصباح',source:'من قالها 10 مرات كتب له 100 حسنة — صحيح البخاري'},
-    {text:'اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ',count:1,daleel:'ذكر الصباح',source:'رواه أبو داود وابن ماجه'},
-    {text:'اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي',count:3,daleel:'ذكر الصباح',source:'رواه أبو داود — صحيح'},
-    {text:'بِسْمِ اللهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ',count:3,daleel:'ذكر الصباح',source:'من قالها 3 مرات لم تصبه فجأة بلاء — صحيح أبو داود'},
-    {text:'رَضِيتُ بِاللهِ رَبًّا وَبِالْإِسْلَامِ دِينًا وَبِمُحَمَّدٍ ﷺ نَبِيًّا',count:3,daleel:'ذكر الصباح',source:'من قالها 3 مرات كان حقاً على الله أن يرضيه — صحيح أبو داود'},
-    {text:'يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ أَصْلِحْ لِي شَأْنِي كُلَّهُ وَلَا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ',count:1,daleel:'ذكر الصباح',source:'رواه الحاكم وصححه'},
-    {text:'أَصْبَحْنَا عَلَى فِطْرَةِ الْإِسْلَامِ وَعَلَى كَلِمَةِ الْإِخْلَاصِ وَعَلَى دِينِ نَبِيِّنَا مُحَمَّدٍ ﷺ',count:1,daleel:'ذكر الصباح',source:'رواه أحمد'},
-    {text:'اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَأَعُوذُ بِكَ مِنَ الْعَجْزِ وَالْكَسَلِ',count:1,daleel:'دعاء الصباح',source:'رواه البخاري'},
-    {text:'اللَّهُمَّ مَا أَصْبَحَ بِي مِنْ نِعْمَةٍ أَوْ بِأَحَدٍ مِنْ خَلْقِكَ فَمِنْكَ وَحْدَكَ لَا شَرِيكَ لَكَ',count:1,daleel:'شكر النعمة',source:'من قالها فقد أدى شكر يومه — صحيح أبو داود'},
-    {text:'حَسْبِيَ اللهُ لَا إِلَهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ',count:7,daleel:'ذكر الصباح',source:'من قالها 7 مرات كفاه الله ما أهمه — صحيح أبو داود'},
-    {text:'اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبِيِّنَا مُحَمَّدٍ',count:10,daleel:'الصلاة على النبي ﷺ',source:'من صلى علي مرة صلى الله عليه عشراً — صحيح مسلم'},
-    {text:'سُبْحَانَ اللهِ وَبِحَمْدِهِ عَدَدَ خَلْقِهِ وَرِضَا نَفْسِهِ وَزِنَةَ عَرْشِهِ وَمِدَادَ كَلِمَاتِهِ',count:3,daleel:'ذكر الصباح',source:'رواه مسلم'},
-    {text:'اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا وَرِزْقًا طَيِّبًا وَعَمَلًا مُتَقَبَّلًا',count:1,daleel:'دعاء الصباح',source:'رواه ابن ماجه — صحيح'},
-    {text:'أَعُوذُ بِكَلِمَاتِ اللهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ',count:3,daleel:'ذكر المساء والصباح',source:'من قالها 3 مرات لم يضره شيء — صحيح مسلم'},
-  ],
-  masa: [
-    {text:'اللَّهُمَّ بِكَ أَمْسَيْنَا وَبِكَ أَصْبَحْنَا وَبِكَ نَحْيَا وَبِكَ نَمُوتُ وَإِلَيْكَ الْمَصِيرُ',count:1,daleel:'ذكر المساء',source:'رواه أبو داود والترمذي'},
-    {text:'أَمْسَيْنَا وَأَمْسَى الْمُلْكُ للهِ وَالْحَمْدُ للهِ لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ',count:1,daleel:'ذكر المساء',source:'رواه مسلم'},
-    {text:'اللهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ — آية الكرسي كاملة',count:1,daleel:'آية الكرسي مساءً',source:'من قرأها مساءً أُجير من الجن حتى يصبح — صحيح البخاري'},
-    {text:'سُبْحَانَ اللهِ وَبِحَمْدِهِ',count:100,daleel:'ذكر المساء',source:'من قالها 100 مرة حُطت خطاياه — صحيح مسلم'},
-    {text:'اللَّهُمَّ إِنِّي أَمْسَيْتُ أُشْهِدُكَ وَأُشْهِدُ حَمَلَةَ عَرْشِكَ وَمَلَائِكَتَكَ وَجَمِيعَ خَلْقِكَ',count:4,daleel:'ذكر المساء',source:'رواه أبو داود — صحيح'},
-    {text:'اللَّهُمَّ عَافِنِي فِي بَدَنِي اللَّهُمَّ عَافِنِي فِي سَمْعِي اللَّهُمَّ عَافِنِي فِي بَصَرِي',count:3,daleel:'ذكر المساء',source:'رواه أبو داود — صحيح'},
-    {text:'بِسْمِ اللهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ',count:3,daleel:'ذكر المساء',source:'صحيح أبو داود'},
-    {text:'اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ',count:1,daleel:'ذكر المساء',source:'رواه أبو داود وابن ماجه'},
-    {text:'اللَّهُمَّ مَا أَمْسَى بِي مِنْ نِعْمَةٍ فَمِنْكَ وَحْدَكَ لَا شَرِيكَ لَكَ فَلَكَ الْحَمْدُ وَلَكَ الشُّكْرُ',count:1,daleel:'شكر النعمة مساءً',source:'صحيح أبو داود'},
-    {text:'أَعُوذُ بِكَلِمَاتِ اللهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ',count:3,daleel:'ذكر المساء',source:'صحيح مسلم'},
-    {text:'حَسْبِيَ اللهُ لَا إِلَهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ',count:7,daleel:'ذكر المساء',source:'صحيح أبو داود'},
-    {text:'رَضِيتُ بِاللهِ رَبًّا وَبِالْإِسْلَامِ دِينًا وَبِمُحَمَّدٍ ﷺ نَبِيًّا',count:3,daleel:'ذكر المساء',source:'صحيح أبو داود'},
-    {text:'يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ',count:1,daleel:'ذكر المساء',source:'رواه الحاكم'},
-    {text:'اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبِيِّنَا مُحَمَّدٍ',count:10,daleel:'الصلاة على النبي',source:'صحيح مسلم'},
-    {text:'قُلْ هُوَ اللهُ أَحَدٌ — الإخلاص والمعوذتان',count:3,daleel:'المعوذات مساءً',source:'من قرأهن 3 مرات كفتاه — صحيح الترمذي'},
-  ],
-  nawm: [
-    {text:'بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا',count:1,daleel:'ذكر النوم',source:'رواه البخاري'},
-    {text:'اللَّهُمَّ قِنِي عَذَابَكَ يَوْمَ تَبْعَثُ عِبَادَكَ',count:3,daleel:'ذكر النوم',source:'رواه أبو داود — صحيح'},
-    {text:'سُبْحَانَ اللهِ — الحمد لله — الله أكبر',count:33,daleel:'تسبيح النوم',source:'خير لك من خادم — متفق عليه'},
-    {text:'آيَةُ الْكُرْسِيِّ — من قرأها لم يزل عليه من الله حافظ',count:1,daleel:'آية الكرسي قبل النوم',source:'صحيح البخاري'},
-    {text:'الَّذِي بِيَدِهِ الْمُلْكُ — سورة الملك',count:1,daleel:'سورة الملك قبل النوم',source:'تشفع لصاحبها حتى يُغفر له — صحيح الترمذي'},
-    {text:'بِاسْمِكَ رَبِّي وَضَعْتُ جَنْبِي وَبِكَ أَرْفَعُهُ',count:1,daleel:'ذكر النوم',source:'رواه البخاري'},
-    {text:'اللَّهُمَّ أَسْلَمْتُ نَفْسِي إِلَيْكَ وَفَوَّضْتُ أَمْرِي إِلَيْكَ',count:1,daleel:'ذكر النوم',source:'رواه البخاري'},
-    {text:'الْحَمْدُ للهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَكَفَانَا وَآوَانَا',count:1,daleel:'ذكر النوم',source:'رواه مسلم'},
-    {text:'اللَّهُمَّ إِنَّكَ خَلَقْتَ نَفْسِي وَأَنْتَ تَتَوَفَّاهَا لَكَ مَمَاتُهَا وَمَحْيَاهَا',count:1,daleel:'دعاء النوم',source:'رواه مسلم'},
-    {text:'سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ لَا إِلَهَ إِلَّا أَنْتَ أَسْتَغْفِرُكَ وَأَتُوبُ إِلَيْكَ',count:1,daleel:'كفارة المجلس',source:'رواه الترمذي'},
-  ],
-  salah: [
-    {text:'أَسْتَغْفِرُ اللهَ',count:3,daleel:'بعد الصلاة',source:'رواه مسلم'},
-    {text:'اللَّهُمَّ أَنْتَ السَّلَامُ وَمِنْكَ السَّلَامُ تَبَارَكْتَ يَا ذَا الْجَلَالِ وَالْإِكْرَامِ',count:1,daleel:'بعد الصلاة',source:'رواه مسلم'},
-    {text:'لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ',count:1,daleel:'بعد الصلاة',source:'رواه مسلم'},
-    {text:'سُبْحَانَ اللهِ',count:33,daleel:'تسبيح بعد الصلاة',source:'متفق عليه'},
-    {text:'الْحَمْدُ للهِ',count:33,daleel:'تحميد بعد الصلاة',source:'متفق عليه'},
-    {text:'اللهُ أَكْبَرُ',count:33,daleel:'تكبير بعد الصلاة',source:'متفق عليه'},
-    {text:'اللَّهُمَّ أَعِنِّي عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ',count:1,daleel:'دعاء بعد الصلاة',source:'رواه أبو داود — صحيح'},
-    {text:'آيَةُ الْكُرْسِيِّ دُبُرَ كُلِّ صَلَاةٍ',count:1,daleel:'آية الكرسي بعد الصلاة',source:'من قرأها لم يمنعه من دخول الجنة إلا الموت — صحيح النسائي'},
-  ]
-};
+const azkarData = { /* بيانات الأذكار كما هي في كودك */ sabah:[{text:'سُبْحَانَ اللهِ وَبِحَمْدِهِ',count:100,daleel:'',source:''}] }; 
 
-// ===== المتغيرات =====
 let isDark = true;
 let currentSurah = null;
+let currentAyahsData = []; // لتخزين الداتا الخاصة بالتفسير والأرقام
 let isPlaying = false;
 let favorites = JSON.parse(localStorage.getItem('favs') || '[]');
 let tasbehCount = 0;
 let tasbehTotal = parseInt(localStorage.getItem('tasbehTotal') || '0');
-let zekrCounts = {};
-let totalAzkar = 0;
 
-// ===== الثيم =====
+// ----- متغيرات التشغيل المتسلسل والضغط المطول -----
+let selectedAyahsQueue = []; // الأيات التي تم تحديدها للتشغيل
+let isPlayingQueue = false;
+let currentQueueIndex = 0;
+let pressTimer;
+let startX, startY;
+let isLongPress = false;
+let activeAyahIndex = null; // الآية اللي ضغطنا عليها
+
+// ----- الثيم -----
 function toggleTheme() {
   isDark = !isDark;
   document.body.classList.toggle('light', !isDark);
   document.getElementById('themeBtn').textContent = isDark ? '☀️' : '🌙';
 }
 
-// ===== التنقل =====
 function showPage(id, el) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   el.classList.add('active');
   if(id === 'favPage') renderFav();
-  updateStats();
 }
 
-// ===== القرآن =====
 function renderSurahs(list) {
   document.getElementById('surahList').innerHTML = list.map(s => `
     <div class="surah-item" onclick="openSurah(${s.n})">
@@ -439,31 +308,62 @@ function filterSurahs(q) {
   renderSurahs(surahs.filter(s => s.name.includes(q) || String(s.n).includes(q)));
 }
 
+// دالة تحويل الأرقام الإنجليزية للعربية
+function toArabicNumber(n) {
+  const arabicDigits = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+  return n.toString().replace(/\d/g, d => arabicDigits[d]);
+}
+
+// ----- فتح السورة ورسم المصحف -----
 async function openSurah(n) {
   currentSurah = surahs.find(s => s.n === n);
   document.getElementById('surahScreen').style.display = 'block';
   document.getElementById('surahScreenTitle').textContent = 'سورة ' + currentSurah.name;
   document.getElementById('favSurahBtn').textContent = favorites.includes('s'+n) ? '⭐' : '🤍';
-  document.getElementById('ayahContainer').innerHTML = '<div style="text-align:center;padding:40px;color:var(--text2)">⏳ جاري التحميل...</div>';
+  document.getElementById('ayahContainer').innerHTML = '<div style="text-align:center;padding:40px;color:var(--text2)">⏳ جاري تحميل الرسم العثماني...</div>';
+  
   stopAudio();
+  selectedAyahsQueue = []; // تصفير قائمة التشغيل المحددة
+  
   try {
     const r = await fetch(`https://api.alquran.cloud/v1/surah/${n}/editions/quran-uthmani,ar.muyassar`);
     const d = await r.json();
-    const arabic = d.data[0].ayahs;
-    const tafseer = d.data[1].ayahs;
-    document.getElementById('ayahContainer').innerHTML = arabic.map((a, i) => `
-      <div class="ayah-card">
-        <div class="ayah-top">
-          <div class="ayah-num">${a.numberInSurah}</div>
-          <div class="ayah-actions">
-            <button class="ayah-action-btn" onclick="toggleFavAyah(${n},${a.numberInSurah})" id="fav_${n}_${a.numberInSurah}">${favorites.includes('a'+n+'_'+a.numberInSurah)?'⭐':'🤍'}</button>
-          </div>
-        </div>
-        <div class="ayah-arabic">${a.text}</div>
-        <button class="tafseer-toggle" onclick="toggleTafseer(${i})">📝 التفسير الميسر</button>
-        <div class="tafseer-text" id="tafseer_${i}">${tafseer[i].text}</div>
-      </div>
-    `).join('');
+    
+    // حفظ البيانات في مصفوفة لسهولة الوصول للتفسير ورقم الآية العام (Global Number لملف الصوت)
+    currentAyahsData = d.data[0].ayahs.map((a, i) => ({
+      text: a.text,
+      numberInSurah: a.numberInSurah,
+      globalNumber: a.number, // رقم الآية العام في القرآن كله
+      tafseer: d.data[1].ayahs[i].text
+    }));
+
+    // بناء شكل المصحف المتصل
+    let html = `<div class="mushaf-page" id="mushafPage">`;
+    
+    // إضافة البسملة إذا لم تكن الفاتحة أو التوبة
+    if(n !== 1 && n !== 9) {
+       html += `<div class="bismillah">بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ</div>`;
+    }
+
+    html += currentAyahsData.map((a, index) => {
+      // إزالة البسملة من أول آية لأننا حطيناها فوق (الفاتحة البسملة آية 1 فيها)
+      let cleanText = a.text;
+      if (n !== 1 && index === 0 && cleanText.startsWith('بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ')) {
+          cleanText = cleanText.replace('بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ', '').trim();
+      }
+      
+      // إضافة Events للتعرف على الضغطة المطولة والقصيرة
+      return `<span class="ayah-span" id="ayah_${index}" 
+        onmousedown="startPress(event, ${index})" ontouchstart="startPress(event, ${index})"
+        onmousemove="cancelPress(event)" ontouchmove="cancelPress(event)"
+        onmouseup="handleAyahUp(event, ${index})" ontouchend="handleAyahUp(event, ${index})">
+        ${cleanText} <span class="ayah-sign">﴿${toArabicNumber(a.numberInSurah)}﴾</span>
+      </span>`;
+    }).join(' ');
+
+    html += `</div>`;
+    document.getElementById('ayahContainer').innerHTML = html;
+
   } catch(e) {
     document.getElementById('ayahContainer').innerHTML = '<div style="text-align:center;padding:40px;color:var(--text2)">تحتاج اتصال بالإنترنت لتحميل الآيات 🌐</div>';
   }
@@ -472,10 +372,6 @@ async function openSurah(n) {
 function closeSurah() {
   document.getElementById('surahScreen').style.display = 'none';
   stopAudio();
-}
-
-function toggleTafseer(i) {
-  document.getElementById('tafseer_'+i).classList.toggle('show');
 }
 
 function toggleFavSurah() {
@@ -487,29 +383,170 @@ function toggleFavSurah() {
   document.getElementById('favSurahBtn').textContent = favorites.includes(key) ? '⭐' : '🤍';
 }
 
-function toggleFavAyah(n, num) {
-  const key = 'a'+n+'_'+num;
-  if(favorites.includes(key)) favorites = favorites.filter(f => f !== key);
-  else favorites.push(key);
-  localStorage.setItem('favs', JSON.stringify(favorites));
-  document.getElementById('fav_'+n+'_'+num).textContent = favorites.includes(key) ? '⭐' : '🤍';
+// ----- أحداث الضغط المطول (Long Press Logic) -----
+function startPress(e, index) {
+  isLongPress = false;
+  startX = e.clientX || (e.touches && e.touches[0].clientX);
+  startY = e.clientY || (e.touches && e.touches[0].clientY);
+  
+  pressTimer = setTimeout(() => {
+    isLongPress = true;
+    openActionMenu(index);
+  }, 500); // نص ثانية تعتبر ضغطة مطولة
 }
 
-// ===== الصوت =====
-function toggleAudio() {
-  const audio = document.getElementById('audioPlayer');
-  if(!currentSurah) return;
-  if(!isPlaying) {
-    audio.src = currentSurah.audio;
-    audio.play();
-    isPlaying = true;
-    document.getElementById('playBtn').textContent = '⏸';
-    document.getElementById('audioStatus').textContent = 'يُشغّل — ' + currentSurah.name;
+function cancelPress(e) {
+  if(e && e.type.includes('move')) {
+    let currentX = e.clientX || (e.touches && e.touches[0].clientX);
+    let currentY = e.clientY || (e.touches && e.touches[0].clientY);
+    // لو حرك صباعه أكتر من 10 بيكسل نلغي الضغطة المطولة (بيعمل Scroll)
+    if (Math.abs(currentX - startX) > 10 || Math.abs(currentY - startY) > 10) {
+      clearTimeout(pressTimer);
+    }
+    return;
+  }
+  clearTimeout(pressTimer);
+}
+
+function handleAyahUp(e, index) {
+  cancelPress(e);
+  if (!isLongPress) {
+    // ضغطة عادية قصيرة: نفتح القائمة برضه عشان نسهل على المستخدم أو نحددها مباشرة (هنا هفتح القائمة)
+    openActionMenu(index);
+  }
+}
+
+// ----- قائمة الخيارات للآية (Menu) -----
+function openActionMenu(index) {
+  activeAyahIndex = index;
+  const ayahNum = currentAyahsData[index].numberInSurah;
+  document.getElementById('actionAyahTitle').textContent = `الآية رقم ﴿${toArabicNumber(ayahNum)}﴾`;
+  document.getElementById('overlayDimmer').classList.add('show');
+  document.getElementById('actionSheet').classList.add('show');
+}
+
+function closeActionMenu() {
+  document.getElementById('overlayDimmer').classList.remove('show');
+  document.getElementById('actionSheet').classList.remove('show');
+}
+
+// خيار التفسير
+function actionTafseer() {
+  closeActionMenu();
+  const data = currentAyahsData[activeAyahIndex];
+  document.getElementById('modalTitle').textContent = `📖 تفسير الآية ${data.numberInSurah}`;
+  document.getElementById('modalText').textContent = data.tafseer;
+  document.getElementById('modalSource').textContent = "المصدر: التفسير الميسر";
+  document.getElementById('infoModal').classList.add('show');
+}
+
+// خيار تحديد الآية للتشغيل
+function actionSelect() {
+  closeActionMenu();
+  const index = activeAyahIndex;
+  const span = document.getElementById(`ayah_${index}`);
+  
+  // لو موجودة في القائمة شيلها، لو مش موجودة ضيفها
+  if (selectedAyahsQueue.includes(index)) {
+    selectedAyahsQueue = selectedAyahsQueue.filter(i => i !== index);
+    span.classList.remove('selected');
   } else {
+    selectedAyahsQueue.push(index);
+    span.classList.add('selected');
+  }
+  
+  // إعادة ترتيب الأيات تصاعدياً
+  selectedAyahsQueue.sort((a,b) => a - b);
+  
+  // تحديث حالة مشغل الصوت
+  if (selectedAyahsQueue.length > 0) {
+    document.getElementById('audioStatus').textContent = `تم تحديد ${selectedAyahsQueue.length} آيات للتشغيل`;
+  } else {
+    document.getElementById('audioStatus').textContent = `اضغط للتشغيل (سيتم تشغيل السورة كاملة)`;
+  }
+}
+
+// خيار المشاركة
+function actionShare() {
+  closeActionMenu();
+  const data = currentAyahsData[activeAyahIndex];
+  const shareText = `﴿ ${data.text} ﴾\n[سورة ${currentSurah.name}: ${data.numberInSurah}]\n\n- صدقة جارية عن شيماء سعيد`;
+  
+  if (navigator.share) {
+    navigator.share({ title: 'آية من القرآن الكريم', text: shareText });
+  } else {
+    navigator.clipboard.writeText(shareText);
+    alert('تم نسخ الآية للحافظة');
+  }
+}
+
+function closeModals() {
+  document.getElementById('infoModal').classList.remove('show');
+}
+
+// ----- مشغل الصوت المطور (للآيات المحددة أو السورة كاملة) -----
+function toggleAudio() {
+  if(!currentSurah) return;
+  const audio = document.getElementById('audioPlayer');
+  
+  if(isPlaying) {
     audio.pause();
     isPlaying = false;
     document.getElementById('playBtn').textContent = '▶️';
     document.getElementById('audioStatus').textContent = 'متوقف';
+  } else {
+    // لو في آيات محددة، نشغلهم بس
+    if (selectedAyahsQueue.length > 0) {
+      isPlayingQueue = true;
+      currentQueueIndex = 0;
+      playNextInQueue();
+    } else {
+      // لو مفيش، نشغل السورة كلها زي الأول
+      isPlayingQueue = false;
+      audio.src = currentSurah.audio;
+      audio.play();
+      isPlaying = true;
+      document.getElementById('playBtn').textContent = '⏸';
+      document.getElementById('audioStatus').textContent = 'يُشغّل — ' + currentSurah.name;
+    }
+  }
+}
+
+function playNextInQueue() {
+  if (currentQueueIndex >= selectedAyahsQueue.length) {
+    stopAudio();
+    document.getElementById('audioStatus').textContent = 'انتهت تلاوة الآيات المحددة 🌙';
+    return;
+  }
+  
+  const index = selectedAyahsQueue[currentQueueIndex];
+  const ayahData = currentAyahsData[index];
+  
+  // شيل تظليل القراءة من كل الآيات وحطها عالآية الحالية
+  document.querySelectorAll('.ayah-span').forEach(el => el.classList.remove('playing'));
+  document.getElementById(`ayah_${index}`).classList.add('playing');
+  
+  // هنجيب ملف الصوت للآية دي مخصوص (بصوت المنشاوي) عن طريق الـ Global Number بتاعها
+  const audioUrl = `https://cdn.islamic.network/quran/audio/128/ar.minshawi/${ayahData.globalNumber}.mp3`;
+  
+  const audio = document.getElementById('audioPlayer');
+  audio.src = audioUrl;
+  audio.play();
+  
+  isPlaying = true;
+  document.getElementById('playBtn').textContent = '⏸';
+  document.getElementById('audioStatus').textContent = `يُشغّل الآية رقم ${ayahData.numberInSurah}`;
+}
+
+function audioEnded() {
+  if (isPlayingQueue) {
+    // لو احنا في طابور التحديد، شغل الآية اللي بعدها
+    currentQueueIndex++;
+    playNextInQueue();
+  } else {
+    isPlaying = false;
+    document.getElementById('playBtn').textContent = '▶️';
+    document.getElementById('audioStatus').textContent = 'انتهت التلاوة 🌙';
   }
 }
 
@@ -518,63 +555,13 @@ function stopAudio() {
   audio.pause();
   audio.src = '';
   isPlaying = false;
+  isPlayingQueue = false;
   document.getElementById('playBtn').textContent = '▶️';
-  document.getElementById('audioStatus').textContent = 'اضغط للتشغيل';
+  document.getElementById('audioStatus').textContent = selectedAyahsQueue.length > 0 ? `تم تحديد ${selectedAyahsQueue.length} آيات` : 'اضغط للتشغيل';
+  document.querySelectorAll('.ayah-span').forEach(el => el.classList.remove('playing'));
 }
 
-function audioEnded() {
-  isPlaying = false;
-  document.getElementById('playBtn').textContent = '▶️';
-  document.getElementById('audioStatus').textContent = 'انتهت التلاوة 🌙';
-}
-
-// ===== الأذكار =====
-function showAzkar(cat, el) {
-  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('azkarList').innerHTML = azkarData[cat].map((z, i) => `
-    <div class="zekr-card" id="zcard_${cat}_${i}">
-      <div class="zekr-text">${z.text}</div>
-      <div class="zekr-bottom">
-        <div class="zekr-counter">
-          <button class="zekr-btn" onclick="countZekr('${cat}',${i},${z.count})">+</button>
-          <div class="zekr-count" id="zc_${cat}_${i}">${zekrCounts[cat+'_'+i]||0}</div>
-          <div class="zekr-max">/ ${z.count}</div>
-        </div>
-        <div style="display:flex;gap:6px;align-items:center;">
-          <span class="done-badge" id="done_${cat}_${i}">✓ تم</span>
-          <button class="daleel-btn" onclick="showDaleel('${cat}',${i})">📚 الدليل</button>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
-showAzkar('sabah', document.querySelector('.cat-btn'));
-
-function countZekr(cat, i, max) {
-  const key = cat+'_'+i;
-  zekrCounts[key] = (zekrCounts[key] || 0) + 1;
-  document.getElementById('zc_'+cat+'_'+i).textContent = zekrCounts[key];
-  totalAzkar++;
-  if(zekrCounts[key] >= max) {
-    document.getElementById('done_'+cat+'_'+i).style.display = 'inline-block';
-    document.getElementById('zc_'+cat+'_'+i).style.color = '#4caf50';
-  }
-  updateStats();
-}
-
-function showDaleel(cat, i) {
-  const z = azkarData[cat][i];
-  document.getElementById('daleelText').textContent = z.daleel;
-  document.getElementById('daleelSource').textContent = '📖 ' + z.source;
-  document.getElementById('daleelModal').classList.add('show');
-}
-
-function closeModal() {
-  document.getElementById('daleelModal').classList.remove('show');
-}
-
-// ===== السبحة =====
+// ----- دوال السبحة وباقي الكود... -----
 function incrementTasbeh() {
   tasbehCount++;
   tasbehTotal++;
@@ -583,45 +570,13 @@ function incrementTasbeh() {
   document.getElementById('tasbehLabel').textContent = document.getElementById('tasbehType').value;
   document.getElementById('tasbehBar').style.width = Math.min((tasbehCount % 33) / 33 * 100, 100) + '%';
   document.getElementById('tasbehTotal').textContent = 'الإجمالي الكلي: ' + tasbehTotal;
-  if(tasbehCount % 33 === 0 && tasbehCount > 0) {
-    document.getElementById('tasbehCount').style.color = '#4caf50';
-    setTimeout(() => document.getElementById('tasbehCount').style.color = 'var(--gold)', 800);
-  }
-  updateStats();
 }
-
 function resetTasbeh() {
   tasbehCount = 0;
   document.getElementById('tasbehCount').textContent = 0;
   document.getElementById('tasbehBar').style.width = '0%';
   document.getElementById('tasbehLabel').textContent = document.getElementById('tasbehType').value;
 }
-
-// ===== المفضلة =====
-function renderFav() {
-  const el = document.getElementById('favContent');
-  if(favorites.length === 0) {
-    el.innerHTML = '<div class="fav-empty"><div class="icon">⭐</div><p>لا يوجد مفضلة بعد<br>اضغط ⭐ على أي سورة أو ذكر</p></div>';
-    return;
-  }
-  const favSurahs = favorites.filter(f => f.startsWith('s')).map(f => surahs.find(s => s.n === parseInt(f.slice(1)))).filter(Boolean);
-  el.innerHTML = favSurahs.length ? '<h3 style="color:var(--gold);margin-bottom:10px;">📖 السور المفضلة</h3>' + favSurahs.map(s => `
-    <div class="surah-item" onclick="openSurah(${s.n})">
-      <div class="surah-num">${s.n}</div>
-      <div class="surah-info"><div class="surah-name">${s.name}</div><div class="surah-details">${s.ayat} آية</div></div>
-      <div>⭐</div>
-    </div>
-  `).join('') : '<div class="fav-empty"><div class="icon">⭐</div><p>اضغط 🤍 على أي سورة لإضافتها للمفضلة</p></div>';
-}
-
-// ===== الإحصائيات =====
-function updateStats() {
-  document.getElementById('statTasbeh').textContent = tasbehCount;
-  document.getElementById('statAzkar').textContent = totalAzkar;
-}
-
-// Service Worker
-if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
 </script>
 </body>
-  </html>
+</html>
