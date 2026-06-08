@@ -212,6 +212,10 @@ border-right:6px solid var(--mushaf-border);
 
 <!-- QURAN -->
 <div class="page" id="quran">
+    <button id="offlineBtn" onclick="downloadAllForOffline()" style="width:100%; padding:10px; border-radius:12px; background:var(--gold); color:#111; border:none; font-weight:bold; cursor:pointer; margin-bottom:12px; font-family:'Amiri',serif;">
+    📥 تحميل المصحف للقراءة بدون إنترنت
+  </button>
+
   <input class="search-box" placeholder="🔍 ابحث عن سورة..." oninput="filterSurahs(this.value)">
   <div class="surah-list" id="surahList"></div>
 </div>
@@ -1449,6 +1453,41 @@ function updateStats() {
   document.getElementById('statTasbeh').textContent = tasbehCount;
   document.getElementById('statAzkar').textContent = totalAzkar;
 }
+  // ===========================
+// تحميل المصحف بالكامل للأوفلاين
+// ===========================
+async function downloadAllForOffline() {
+  const btn = document.getElementById('offlineBtn');
+  btn.innerHTML = '⏳ جاري التحميل... يرجى الانتظار (0/114)';
+  btn.disabled = true;
+  btn.style.opacity = '0.7';
+
+  try {
+    // بنفتح الـ Cache اللي خصصناه للقرآن
+    const cache = await caches.open('sadaqa-quran-data');
+    
+    // بنلف على الـ 114 سورة نحملهم
+    for(let i = 1; i <= 114; i++) {
+      const url = `https://api.alquran.cloud/v1/surah/${i}/editions/quran-uthmani,ar.muyassar`;
+      const response = await caches.match(url);
+      
+      // لو السورة مش متحملة قبل كده، حملها
+      if(!response) {
+        await cache.add(url); 
+      }
+      btn.innerHTML = `⏳ جاري التحميل... (${i}/114)`;
+    }
+    
+    btn.innerHTML = '✅ تم التحميل (المصحف جاهز بدون نت)';
+    btn.style.background = '#4caf50';
+    btn.style.color = '#fff';
+  } catch (err) {
+    btn.innerHTML = '❌ حدث خطأ، تأكد من الإنترنت واضغط للمحاولة';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  }
+}
+
 </script>
 </body>
                                                                          </html>
