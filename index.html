@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>صدقة جارية عن شيماء سعيد</title>
+<link rel="manifest" href="manifest.json">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  padding: 20px;
+}
+.card {
+  background: rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 40px 30px;
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.moon { font-size: 60px; margin-bottom: 20px; }
+h1 { font-size: 22px; margin-bottom: 10px; color: #ffd700; }
+.name { font-size: 28px; font-weight: bold; margin: 15px 0; color: #fff; }
+.ayah {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #ccc;
+  margin: 20px 0;
+  padding: 15px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+}
+.counter-section { margin: 25px 0; }
+.counter-label { font-size: 14px; color: #aaa; margin-bottom: 10px; }
+.counter { font-size: 48px; font-weight: bold; color: #ffd700; }
+.btn {
+  background: linear-gradient(135deg, #ffd700, #ffaa00);
+  color: #1a1a2e;
+  border: none;
+  border-radius: 50px;
+  padding: 15px 40px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  margin: 10px 0;
+}
+.btn:active { transform: scale(0.97); }
+.reset-btn {
+  background: transparent;
+  color: #aaa;
+  border: 1px solid #aaa;
+  border-radius: 50px;
+  padding: 10px 30px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+.total { font-size: 13px; color: #888; margin-top: 15px; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="moon">🌙</div>
+  <h1>صدقة جارية</h1>
+  <div class="name">شيماء سعيد</div>
+  <div class="ayah">
+    ﴿ إِنَّا نَحْنُ نُحْيِي الْمَوْتَىٰ وَنَكْتُبُ مَا قَدَّمُوا وَآثَارَهُمْ ﴾
+  </div>
+  <div class="counter-section">
+    <div class="counter-label">عدد التسبيحات</div>
+    <div class="counter" id="count">0</div>
+  </div>
+  <button class="btn" onclick="increment()">سبحان الله 🤍</button>
+  <button class="reset-btn" onclick="reset()">إعادة تعيين</button>
+  <div class="total" id="total"></div>
+</div>
+<script>
+let count = parseInt(localStorage.getItem('sadaqa_count') || '0');
+let total = parseInt(localStorage.getItem('sadaqa_total') || '0');
+document.getElementById('count').textContent = count;
+updateTotal();
+function increment() {
+  count++;
+  total++;
+  localStorage.setItem('sadaqa_count', count);
+  localStorage.setItem('sadaqa_total', total);
+  document.getElementById('count').textContent = count;
+  updateTotal();
+}
+function reset() {
+  count = 0;
+  localStorage.setItem('sadaqa_count', 0);
+  document.getElementById('count').textContent = count;
+}
+function updateTotal() {
+  if(total > 0) {
+    document.getElementById('total').textContent = 'إجمالي التسبيحات: ' + total;
+  }
+}
+</script>
+</body>
+</html>
