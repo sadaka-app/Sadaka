@@ -887,15 +887,13 @@ async function openSurah(n) {
       }
 
       sliderHtml += pagesDict[pageNum].map(a => {
-        // إزالة البسملة المدمجة في نص الآية الأولى (ماعدا الفاتحة والتوبة)
         let txt = a.text;
         if (n !== 1 && n !== 9 && a.numberInSurah === 1) {
-          // إزالة البسملة بصيغها المختلفة من بداية النص
-          txt = txt.replace(/^بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ\s*/u, '');
-          txt = txt.replace(/^بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ\s*/u, '');
-          txt = txt.replace(/^بِسْمِ اللهِ الرَّحْمَنِ الرَّحِيمِ\s*/u, '');
+          txt = txt.replace(/^بِسْمِ[\s\S]+?رَّحِيمِ\s*/, '');
+          txt = txt.replace(/^بِسْمِ[\s\S]+?الرَّحِيمِ\s*/, '');
         }
         return `<span class="ayah-span" id="ayah_${a.originalIndex}"
+          oncontextmenu="event.preventDefault();"
           onmousedown="startPress(event,${a.originalIndex})"
           ontouchstart="startPress(event,${a.originalIndex})"
           onmousemove="cancelPress(event)" ontouchmove="cancelPress(event)"
@@ -958,14 +956,14 @@ function startPress(e, index) {
       if(navigator.vibrate) navigator.vibrate(40);
       openActionMenu(index);
     }
-  }, 700);
+  }, 600);
 }
 
 function cancelPress(e) {
   if(e && (e.type==='touchmove'||e.type==='mousemove')) {
     const cx = e.clientX || (e.touches && e.touches[0].clientX) || 0;
     const cy = e.clientY || (e.touches && e.touches[0].clientY) || 0;
-    if(Math.abs(cx-startX)>8 || Math.abs(cy-startY)>8) {
+    if(Math.abs(cx-startX)>15 || Math.abs(cy-startY)>15) {
       isScrolling = true;
       clearTimeout(pressTimer);
     }
