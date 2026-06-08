@@ -1044,6 +1044,50 @@ function actionTafseer() {
   document.getElementById('modalSource').textContent = '📚 المصدر: التفسير الميسر (مجمع الملك فهد)';
   document.getElementById('tafseerModal').classList.add('show');
 }
+// ===========================
+// نظام الفواصل (Bookmarks)
+// ===========================
+let savedBookmark = JSON.parse(localStorage.getItem('quran_bookmark')) || null;
+
+function updateBookmarkBanner() {
+  const banner = document.getElementById('bookmarkBanner');
+  if (savedBookmark) {
+    banner.style.display = 'flex';
+    const sName = surahs.find(s => s.n === savedBookmark.surah).name;
+    document.getElementById('bookmarkText').textContent = `سورة ${sName} — آية ${toAr(savedBookmark.ayah)}`;
+  } else {
+    banner.style.display = 'none';
+  }
+}
+updateBookmarkBanner();
+
+function actionBookmark() {
+  closeActionMenu();
+  const ayah = currentAyahsData[activeAyahIndex];
+  savedBookmark = {
+    surah: currentSurah.n,
+    ayah: ayah.numberInSurah,
+    index: activeAyahIndex
+  };
+  localStorage.setItem('quran_bookmark', JSON.stringify(savedBookmark));
+  updateBookmarkBanner();
+  alert('✅ تم حفظ الفاصل بنجاح');
+}
+
+async function goToBookmark() {
+  if (!savedBookmark) return;
+  document.querySelectorAll('.tab')[1].click(); 
+  await openSurah(savedBookmark.surah);
+  
+  setTimeout(() => {
+    const span = document.getElementById(`ayah_${savedBookmark.index}`);
+    if (span) {
+      span.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      span.style.background = 'rgba(255, 215, 0, 0.4)';
+      setTimeout(() => { span.style.background = 'transparent'; }, 2000);
+    }
+  }, 500);
+}
 
 function actionSelect() {
   closeActionMenu();
@@ -1543,6 +1587,54 @@ async function checkAudioCache(surahNum) {
            btn.disabled = false;
        }
    } catch(e) {}
+}
+// ===========================
+// نظام الفواصل (Bookmarks)
+// ===========================
+let savedBookmark = JSON.parse(localStorage.getItem('quran_bookmark')) || null;
+
+function updateBookmarkBanner() {
+  const banner = document.getElementById('bookmarkBanner');
+  if (savedBookmark) {
+    banner.style.display = 'flex';
+    const sName = surahs.find(s => s.n === savedBookmark.surah).name;
+    document.getElementById('bookmarkText').textContent = `سورة ${sName} — آية ${toAr(savedBookmark.ayah)}`;
+  } else {
+    banner.style.display = 'none';
+  }
+}
+// تشغيل الدالة أول ما التطبيق يفتح
+updateBookmarkBanner();
+
+function actionBookmark() {
+  closeActionMenu();
+  const ayah = currentAyahsData[activeAyahIndex];
+  savedBookmark = {
+    surah: currentSurah.n,
+    ayah: ayah.numberInSurah,
+    index: activeAyahIndex
+  };
+  localStorage.setItem('quran_bookmark', JSON.stringify(savedBookmark));
+  updateBookmarkBanner();
+  alert('✅ تم حفظ الفاصل بنجاح');
+}
+
+async function goToBookmark() {
+  if (!savedBookmark) return;
+  // التبديل لتاب القرآن لو هو في تاب تاني
+  document.querySelectorAll('.tab')[1].click(); 
+  await openSurah(savedBookmark.surah);
+  
+  // ننتظر نص ثانية لحد ما المصحف يترسم، وبعدين نروح للآية
+  setTimeout(() => {
+    const span = document.getElementById(`ayah_${savedBookmark.index}`);
+    if (span) {
+      span.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // تنوير الآية بلون خفيف لمدة ثانيتين عشان عينه تلمحها
+      span.style.background = 'rgba(255, 215, 0, 0.4)';
+      setTimeout(() => { span.style.background = 'transparent'; }, 2000);
+    }
+  }, 500);
 }
 
 </script>
