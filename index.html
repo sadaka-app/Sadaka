@@ -215,6 +215,10 @@ border-right:6px solid var(--mushaf-border);
     <button id="offlineBtn" onclick="downloadAllForOffline()" style="width:100%; padding:10px; border-radius:12px; background:var(--gold); color:#111; border:none; font-weight:bold; cursor:pointer; margin-bottom:12px; font-family:'Amiri',serif;">
     📥 تحميل المصحف للقراءة بدون إنترنت
   </button>
+  <div id="bookmarkBanner" style="display:none; background:linear-gradient(135deg, var(--gold), #ff8c00); padding:12px 15px; border-radius:12px; margin-bottom:12px; color:#111; font-family:'Amiri',serif; font-weight:bold; cursor:pointer; justify-content:space-between; align-items:center; box-shadow:0 4px 15px rgba(255,140,0,0.3);" onclick="goToBookmark()">
+    <span>🔖 متابعة القراءة: <span id="bookmarkText">...</span></span>
+    <span>←</span>
+  </div>
 
   <input class="search-box" placeholder="🔍 ابحث عن سورة..." oninput="filterSurahs(this.value)">
   <div class="surah-list" id="surahList"></div>
