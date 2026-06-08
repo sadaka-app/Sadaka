@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sadaqa-static-v3';
+const CACHE_NAME = 'sadaqa-static-v2';
 const QURAN_CACHE = 'sadaqa-quran-data';
 const AUDIO_CACHE = 'sadaqa-audio-cache';
 
