@@ -1236,6 +1236,44 @@ function stopAudio() {
   document.getElementById('playBtn').textContent='▶';
   document.querySelectorAll('.ayah-span').forEach(el=>el.classList.remove('playing'));
 }
+// ===========================
+// الدوال الناقصة لإصلاح التجميد
+// ===========================
+
+function stopAudio() {
+  const audio = document.getElementById('audioPlayer');
+  if (audio) {
+    audio.pause();
+    audio.src = '';
+  }
+  isPlaying = false;
+  isPlayingQueue = false;
+  const playBtn = document.getElementById('playBtn');
+  if (playBtn) playBtn.textContent = '▶';
+  document.querySelectorAll('.ayah-span').forEach(el => el.classList.remove('playing'));
+}
+
+function updateAudioStatus() {
+  const n = selectedAyahsQueue.length;
+  const clearBtn = document.getElementById('clearSelBtn');
+  const statusEl = document.getElementById('audioStatus');
+  if (!statusEl) return;
+  
+  if(n > 0) {
+    statusEl.textContent = `تم تحديد ${toAr(n)} آية للتشغيل`;
+    if(clearBtn) clearBtn.style.display = 'block';
+  } else {
+    statusEl.textContent = 'اضغط تشغيل • اضغط مطولًا على آية للخيارات';
+    if(clearBtn) clearBtn.style.display = 'none';
+  }
+}
+
+function closeActionMenu() {
+  const dimmer = document.getElementById('overlayDimmer');
+  const sheet = document.getElementById('actionSheet');
+  if (dimmer) dimmer.classList.remove('show');
+  if (sheet) sheet.classList.remove('show');
+}
 
 // ===========================
 // Azkar
