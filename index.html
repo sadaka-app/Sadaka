@@ -850,7 +850,29 @@ async function openSurah(n) {
   try {
     const r = await fetch(`https://api.alquran.cloud/v1/surah/${n}/editions/quran-uthmani,ar.muyassar`);
     const d = await r.json();
-
+// ضبط حجم الخط تلقائي لكل صفحة
+setTimeout(() => {
+  document.querySelectorAll('.mushaf-page').forEach(page => {
+    let fontSize = 16;
+    page.style.fontSize = fontSize + 'px';
+    page.style.lineHeight = '1.9';
+    
+    while(page.scrollHeight > page.clientHeight && fontSize > 10) {
+      fontSize -= 0.5;
+      page.style.fontSize = fontSize + 'px';
+    }
+    
+    while(page.scrollHeight <= page.clientHeight && fontSize < 22) {
+      fontSize += 0.5;
+      page.style.fontSize = fontSize + 'px';
+      if(page.scrollHeight > page.clientHeight) {
+        fontSize -= 0.5;
+        page.style.fontSize = fontSize + 'px';
+        break;
+      }
+    }
+  });
+}, 500);
     currentAyahsData = d.data[0].ayahs.map((a, i) => ({
       text: a.text,
       numberInSurah: a.numberInSurah,
